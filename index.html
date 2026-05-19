@@ -169,19 +169,19 @@
     .hero-logo-wrap { display:flex; justify-content:center; }
     .hero-logo-float { animation:heroLogoFloat 5.8s ease-in-out infinite; }
     .hero-logo {
-  width:min(46vw, 176px);
-  aspect-ratio:1;
-  border-radius:var(--r-full);
-  overflow:hidden;
-  background:var(--primary);
-  border:4px solid rgba(255,255,255,.82);
-  box-shadow:0 10px 26px rgba(0,0,0,.16), 0 0 0 1px rgba(0,0,0,.08);
-  transform:translateZ(0);
-  transition:transform .22s ease, box-shadow .22s ease;
-}
-.hero-logo:hover { box-shadow:0 16px 36px rgba(0,0,0,.2), 0 0 0 1px rgba(0,0,0,.1); transform:translate3d(0, -4px, 0) scale(1.015); }
-.hero-logo:active { transform:translate3d(0, 1px, 0) scale(.985); }
-.hero-logo img { width:100%; height:100%; object-fit:cover; object-position:50% 50%; }
+      width:min(46vw, 176px);
+      aspect-ratio:1;
+      border-radius:var(--r-full);
+      overflow:hidden;
+      background:var(--primary);
+      border:4px solid rgba(255,255,255,.82);
+      box-shadow:0 10px 26px rgba(0,0,0,.16), 0 0 0 1px rgba(0,0,0,.08);
+      transform:translateZ(0);
+      transition:transform .22s ease, box-shadow .22s ease;
+    }
+    .hero-logo:hover { box-shadow:0 16px 36px rgba(0,0,0,.2), 0 0 0 1px rgba(0,0,0,.1); transform:translate3d(0, -4px, 0) scale(1.015); }
+    .hero-logo:active { transform:translate3d(0, 1px, 0) scale(.985); }
+    .hero-logo img { width:100%; height:100%; object-fit:cover; object-position:50% 50%; }
     .hero-text { text-align:center; }
     .hero-eyebrow { opacity:.5; margin-bottom:var(--sp-sm); }
     .hero-title { margin-bottom:var(--sp-sm); }
@@ -610,138 +610,6 @@
     .lb-name { font-size:20px; font-weight:700; letter-spacing:-.4px; text-align:center; }
     .lb-desc { font-size:13px; opacity:.6; text-align:center; line-height:1.6; }
 
-    .chat-widget {
-      position:fixed;
-      right:var(--sp-md);
-      bottom:calc(var(--bar-h) + var(--safe-bottom) + var(--sp-md));
-      z-index:900;
-      display:flex;
-      flex-direction:column;
-      align-items:flex-end;
-      gap:var(--sp-sm);
-    }
-    .chat-toggle {
-      width:52px;
-      height:52px;
-      border:0;
-      border-radius:var(--r-full);
-      background:var(--primary);
-      color:var(--on-primary);
-      box-shadow:0 4px 14px rgba(0,0,0,.25);
-      cursor:pointer;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      transition:transform .2s ease, box-shadow .2s ease;
-      -webkit-tap-highlight-color:transparent;
-    }
-    .chat-toggle:active { transform:scale(.92); }
-    .chat-toggle svg { width:24px; height:24px; }
-    .chat-panel {
-      width:320px;
-      max-width:calc(100vw - var(--sp-md) * 2);
-      max-height:calc(100vh - 130px);
-      background:var(--canvas);
-      border:1px solid var(--hairline);
-      border-radius:var(--r-lg);
-      box-shadow:0 10px 40px rgba(0,0,0,.18);
-      display:none;
-      flex-direction:column;
-      overflow:hidden;
-      transform-origin:bottom right;
-    }
-    .chat-panel.open { display:flex; animation:chatPop .25s cubic-bezier(.175, .885, .32, 1.275); }
-    @keyframes chatPop { from { opacity:0; transform:scale(.85); } to { opacity:1; transform:scale(1); } }
-    .chat-header {
-      background:var(--primary);
-      color:var(--on-primary);
-      padding:var(--sp-md);
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      gap:var(--sp-md);
-      font-weight:600;
-      font-size:14px;
-      letter-spacing:-.2px;
-    }
-    .chat-header button {
-      width:24px;
-      height:24px;
-      border:0;
-      border-radius:var(--r-full);
-      background:rgba(255,255,255,.15);
-      color:#fff;
-      cursor:pointer;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      font-size:12px;
-    }
-    .chat-body {
-      height:260px;
-      padding:var(--sp-md);
-      overflow-y:auto;
-      display:flex;
-      flex-direction:column;
-      gap:var(--sp-sm);
-      background:var(--surface);
-      scrollbar-width:none;
-    }
-    .chat-body::-webkit-scrollbar { display:none; }
-    .chat-msg {
-      max-width:85%;
-      padding:10px 14px;
-      border-radius:var(--r-md);
-      font-size:13px;
-      line-height:1.5;
-      animation:msgPop .2s ease-out;
-    }
-    @keyframes msgPop { from { opacity:0; transform:translateY(5px); } to { opacity:1; transform:translateY(0); } }
-    .chat-msg.bot { background:var(--canvas); border:1px solid var(--hairline); align-self:flex-start; border-bottom-left-radius:4px; }
-    .chat-msg.user { background:var(--lime); color:var(--primary); align-self:flex-end; border-bottom-right-radius:4px; font-weight:500; }
-    .chat-replies { display:flex; flex-wrap:wrap; gap:6px; padding:0 var(--sp-md) var(--sp-md); background:var(--surface); }
-    .reply-btn {
-      background:var(--canvas);
-      border:1px solid var(--hairline);
-      padding:6px 12px;
-      border-radius:var(--r-pill);
-      font-size:11px;
-      font-weight:500;
-      cursor:pointer;
-      transition:background .15s;
-    }
-    .reply-btn:hover { background:var(--hairline-soft); }
-    .chat-input-area { display:none; padding:var(--sp-sm); background:var(--canvas); border-top:1px solid var(--hairline); gap:var(--sp-xs); }
-    .chat-input-area input {
-      min-width:0;
-      flex:1;
-      padding:10px 14px;
-      border:1px solid var(--hairline);
-      border-radius:var(--r-pill);
-      font-size:13px;
-      outline:none;
-    }
-    .chat-input-area input:focus { border-color:var(--primary); }
-    .chat-input-area button {
-      background:var(--primary);
-      color:var(--on-primary);
-      border:0;
-      padding:0 16px;
-      border-radius:var(--r-pill);
-      font-size:13px;
-      font-weight:600;
-      cursor:pointer;
-    }
-
-    .typing-indicator { display:flex; align-items:center; gap:4px; padding:12px 16px !important; }
-    .typing-indicator span {
-      width:7px; height:7px; border-radius:50%; background:var(--hairline);
-      animation:typingDot 1.2s ease-in-out infinite;
-    }
-    .typing-indicator span:nth-child(2) { animation-delay:.2s; }
-    .typing-indicator span:nth-child(3) { animation-delay:.4s; }
-    @keyframes typingDot { 0%,60%,100% { transform:translateY(0); opacity:.4; } 30% { transform:translateY(-4px); opacity:1; } }
-
     .reveal { opacity:0; transform:translateY(20px); transition:opacity .5s ease, transform .5s ease; }
     .reveal.vis { opacity:1; transform:translateY(0); }
     @keyframes fadeUp { from { opacity:0; transform:translateY(18px); } to { opacity:1; transform:translateY(0); } }
@@ -774,8 +642,137 @@
 
     @media (max-width:360px) {
       .nav-name { max-width:120px; }
-      .chat-widget { right:var(--sp-sm); }
-      .chat-panel { max-width:calc(100vw - var(--sp-sm) * 2); }
+    }
+
+    /* ── JUDY CHATBOT ── */
+    @keyframes judy-pulse{0%{box-shadow:0 0 0 0 rgba(10,10,10,0.3)}70%{box-shadow:0 0 0 12px rgba(10,10,10,0)}100%{box-shadow:0 0 0 0 rgba(10,10,10,0)}}
+    #judy-launcher{
+      position:fixed;bottom:calc(var(--bar-h) + var(--safe-bottom) + 12px);right:var(--sp-md);
+      width:52px;height:52px;border-radius:50%;
+      background:#0a0a0a;border:none;cursor:pointer;
+      display:flex;align-items:center;justify-content:center;
+      box-shadow:0 2px 12px rgba(0,0,0,0.18);
+      transition:transform .18s,box-shadow .18s;
+      z-index:9999;animation:judy-pulse 2.5s infinite;
+    }
+    #judy-launcher:hover{transform:scale(1.06);animation:none;box-shadow:0 8px 24px rgba(0,0,0,0.25)}
+    #judy-launcher svg{width:22px;height:22px;fill:#fff}
+    #judy-launcher .notif{position:absolute;top:7px;right:7px;width:10px;height:10px;background:#22c55e;border-radius:50%;border:2px solid #0a0a0a}
+    #judy-panel{
+      position:fixed;
+      bottom:calc(var(--bar-h) + var(--safe-bottom) + 78px);
+      right:var(--sp-md);width:360px;height:580px;
+      background:#fff;border-radius:16px;border:1px solid #e5e5e5;
+      display:flex;flex-direction:column;
+      box-shadow:0 4px 6px -1px rgba(0,0,0,.05),0 10px 15px -3px rgba(0,0,0,.05),0 25px 50px -12px rgba(0,0,0,.15);
+      transform:scale(0.94) translateY(16px);opacity:0;pointer-events:none;
+      transition:transform .22s cubic-bezier(.34,1.56,.64,1),opacity .18s;
+      z-index:9998;overflow:hidden;
+    }
+    #judy-panel.open{transform:scale(1) translateY(0);opacity:1;pointer-events:all}
+    #judy-festive-banner{
+      display:none;background:linear-gradient(90deg,#ff6b00,#ffd700,#ff6b00);
+      background-size:200% 100%;animation:festive-scroll 3s linear infinite;
+      color:#fff;font-size:11px;font-weight:600;text-align:center;
+      padding:5px 12px;letter-spacing:0.4px;flex-shrink:0;
+    }
+    @keyframes festive-scroll{0%{background-position:0%}100%{background-position:200%}}
+    #judy-header{
+      background:#0a0a0a;padding:14px 16px;
+      display:flex;align-items:center;gap:12px;flex-shrink:0;
+    }
+    #judy-avatar-outer{position:relative;width:44px;height:44px;flex-shrink:0}
+    #judy-avatar-wrap{width:44px;height:44px;border-radius:50%;background:#1e1e1e;border:1.5px solid #333;overflow:hidden}
+    #judy-avatar-wrap svg{width:100%;height:100%}
+    .judy-online-dot{position:absolute;bottom:1px;right:1px;width:11px;height:11px;background:#22c55e;border-radius:50%;border:2px solid #0a0a0a;z-index:2}
+    #judy-info{flex:1}
+    #judy-name{color:#fff;font-weight:600;font-size:15px;letter-spacing:-0.1px}
+    #judy-sub{font-size:11px;color:rgba(255,255,255,0.5);margin-top:1px;letter-spacing:0.3px;text-transform:uppercase}
+    #judy-controls{display:flex;align-items:center;gap:6px}
+    #judy-lang-btn{
+      background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.2);
+      color:#fff;border-radius:20px;padding:3px 8px;font-size:11px;font-weight:600;
+      cursor:pointer;transition:background .15s;font-family:var(--font);white-space:nowrap;
+    }
+    #judy-lang-btn:hover{background:rgba(255,255,255,0.22)}
+    #judy-close{
+      background:rgba(255,255,255,0.1);border:none;color:rgba(255,255,255,0.7);
+      width:28px;height:28px;border-radius:50%;cursor:pointer;font-size:14px;
+      display:flex;align-items:center;justify-content:center;transition:background .15s;
+    }
+    #judy-close:hover{background:rgba(255,255,255,0.2);color:#fff}
+    #judy-body{
+      flex:1;overflow-y:auto;padding:14px 14px 8px;
+      display:flex;flex-direction:column;gap:8px;background:#fff;position:relative;
+    }
+    #judy-body::-webkit-scrollbar{width:3px}
+    #judy-body::-webkit-scrollbar-thumb{background:#e5e5e5;border-radius:4px}
+    .jmsg{
+      max-width:82%;padding:10px 13px;border-radius:14px;
+      font-size:13.5px;line-height:1.6;animation:jfade .2s ease;font-family:var(--font);
+    }
+    @keyframes jfade{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+    .jmsg.bot{background:#f4f4f4;color:#0a0a0a;border:1px solid #ebebeb;border-bottom-left-radius:3px;align-self:flex-start}
+    .jmsg.user{background:#0a0a0a;color:#fff;border-bottom-right-radius:3px;align-self:flex-end}
+    .judy-thinking{
+      display:flex;align-items:center;gap:8px;padding:9px 13px;
+      background:#f4f4f4;border-radius:14px;border-bottom-left-radius:3px;
+      align-self:flex-start;border:1px solid #ebebeb;animation:jfade .2s ease;
+    }
+    .judy-thinking-dots{display:flex;gap:3px}
+    .judy-thinking-dots span{width:5px;height:5px;background:#aaa;border-radius:50%;animation:jdot 1.1s infinite}
+    .judy-thinking-dots span:nth-child(2){animation-delay:.18s}
+    .judy-thinking-dots span:nth-child(3){animation-delay:.36s}
+    .judy-thinking-text{font-size:12px;color:#888;font-style:italic;font-family:var(--font)}
+    @keyframes jdot{0%,80%,100%{transform:scale(0.65);opacity:0.3}40%{transform:scale(1);opacity:0.9}}
+    #judy-confetti{position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:10}
+    #judy-chips{
+      padding:8px 12px 10px;display:flex;flex-wrap:wrap;gap:6px;
+      background:#fff;flex-shrink:0;border-top:1px solid #f0f0f0;
+    }
+    .jchip{
+      background:#fff;border:1px solid #d4d4d4;color:#0a0a0a;border-radius:100px;
+      padding:5px 12px;font-size:12px;font-weight:500;cursor:pointer;transition:all .12s;
+      font-family:var(--font);white-space:nowrap;letter-spacing:-0.1px;
+    }
+    .jchip:hover{background:#0a0a0a;color:#fff;border-color:#0a0a0a}
+    #judy-input-row{
+      display:flex;align-items:center;gap:8px;padding:10px 12px 12px;
+      background:#fff;border-top:1px solid #f0f0f0;flex-shrink:0;
+    }
+    #judy-input{
+      flex:1;border:1px solid #e5e5e5;border-radius:100px;padding:8px 15px;font-size:13px;
+      font-family:var(--font);color:#0a0a0a;background:#fafafa;outline:none;
+      transition:border .12s,box-shadow .12s,background .12s;
+    }
+    #judy-input:focus{border-color:#0a0a0a;background:#fff;box-shadow:0 0 0 3px rgba(10,10,10,0.1)}
+    #judy-input::placeholder{color:#aaa}
+    #judy-mic{
+      width:34px;height:34px;border-radius:50%;background:#f0f0f0;border:none;cursor:pointer;
+      display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:background .15s,transform .12s;
+    }
+    #judy-mic:hover{background:#e0e0e0;transform:scale(1.06)}
+    #judy-mic.recording{background:#ff4444;animation:mic-pulse 1s infinite}
+    @keyframes mic-pulse{0%,100%{opacity:1}50%{opacity:0.6}}
+    #judy-mic svg{width:14px;height:14px;fill:#555}
+    #judy-mic.recording svg{fill:#fff}
+    #judy-send{
+      width:34px;height:34px;border-radius:50%;background:#25D366;border:none;cursor:pointer;
+      display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:transform .12s,opacity .12s;
+    }
+    #judy-send:hover{transform:scale(1.06);opacity:0.9}
+    #judy-send svg{width:15px;height:15px;fill:#fff}
+    #judy-wa-note{
+      font-size:10.5px;color:#aaa;text-align:center;letter-spacing:0.1px;
+      padding:3px 12px 9px;background:#fff;font-family:var(--font);
+    }
+    @media(max-width:480px){
+      #judy-panel{
+        width:calc(100vw - 16px);right:8px;
+        bottom:calc(var(--bar-h) + var(--safe-bottom) + 72px);
+        height:calc(100vh - var(--bar-h) - var(--safe-bottom) - 90px);
+        border-radius:16px;
+      }
     }
   </style>
 </head>
@@ -1099,6 +1096,7 @@
     </div>
   </footer>
 
+  <!-- BOTTOM BAR -->
   <div class="bar" role="navigation" aria-label="Quick contact">
     <div class="bar-inner">
       <a href="tel:+917408889888" class="bar-btn b-call">
@@ -1116,6 +1114,7 @@
     </div>
   </div>
 
+  <!-- PRODUCT LIGHTBOX -->
   <div class="lb" id="lb" role="dialog" aria-modal="true" onclick="closeLb(event)">
     <div class="lb-sheet">
       <div class="lb-handle"></div>
@@ -1132,36 +1131,82 @@
     </div>
   </div>
 
-  <div class="chat-widget">
-    <div class="chat-panel" id="chat-panel" role="dialog" aria-label="New RK assistant">
-      <div class="chat-header">
-        <span>Assistant - New RK</span>
-        <button onclick="toggleChat()" aria-label="Close chat">x</button>
+  <!-- JUDY CHATBOT -->
+  <button id="judy-launcher" onclick="toggleJudy()" aria-label="Open chat with Judy">
+    <svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/></svg>
+    <div class="notif"></div>
+  </button>
+
+  <div id="judy-panel">
+    <div id="judy-festive-banner"></div>
+    <div id="judy-header">
+      <div id="judy-avatar-outer">
+        <div id="judy-avatar-wrap">
+          <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="50" cy="50" r="50" fill="#2a2a2a"/>
+            <ellipse cx="50" cy="88" rx="26" ry="14" fill="#2a2a2a"/>
+            <rect x="44" y="65" width="12" height="14" rx="6" fill="#f0c090"/>
+            <ellipse cx="50" cy="52" rx="22" ry="24" fill="#f0c090"/>
+            <ellipse cx="50" cy="38" rx="22" ry="18" fill="#111"/>
+            <ellipse cx="50" cy="32" rx="20" ry="14" fill="#1a1a1a"/>
+            <ellipse cx="30" cy="52" rx="8" ry="14" fill="#1a1a1a"/>
+            <ellipse cx="70" cy="52" rx="8" ry="14" fill="#1a1a1a"/>
+            <ellipse cx="50" cy="54" rx="18" ry="20" fill="#f0c090"/>
+            <ellipse cx="42" cy="50" rx="5" ry="6" fill="#fff"/>
+            <ellipse cx="58" cy="50" rx="5" ry="6" fill="#fff"/>
+            <ellipse cx="42" cy="51" rx="3.2" ry="3.8" fill="#1a1a1a"/>
+            <ellipse cx="58" cy="51" rx="3.2" ry="3.8" fill="#1a1a1a"/>
+            <circle cx="43.2" cy="49.5" r="1.1" fill="#fff"/>
+            <circle cx="59.2" cy="49.5" r="1.1" fill="#fff"/>
+            <path d="M37 44 Q42 41 47 44" stroke="#111" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+            <path d="M53 44 Q58 41 63 44" stroke="#111" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+            <ellipse cx="50" cy="58" rx="2.5" ry="2" fill="#d9a070"/>
+            <path d="M43 64 Q50 70 57 64" stroke="#a06040" stroke-width="2" fill="none" stroke-linecap="round"/>
+            <ellipse cx="36" cy="61" rx="6" ry="4" fill="#e8906a" opacity="0.3"/>
+            <ellipse cx="64" cy="61" rx="6" ry="4" fill="#e8906a" opacity="0.3"/>
+            <path d="M24 88 Q36 74 50 74 Q64 74 76 88 Q62 80 50 80 Q38 80 24 88Z" fill="#222"/>
+            <path d="M36 74 Q50 70 64 74" stroke="#888" stroke-width="1" fill="none" stroke-linecap="round"/>
+            <path d="M24 88 Q20 78 26 70" stroke="#aaa" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+            <path d="M76 88 Q80 78 74 70" stroke="#aaa" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+            <circle cx="28.5" cy="57" r="2.5" fill="#c8c8c8"/>
+            <circle cx="71.5" cy="57" r="2.5" fill="#c8c8c8"/>
+            <ellipse id="judy-lid-l" cx="42" cy="50" rx="5.5" ry="0" fill="#f0c090"/>
+            <ellipse id="judy-lid-r" cx="58" cy="50" rx="5.5" ry="0" fill="#f0c090"/>
+            <style>#judy-lid-l,#judy-lid-r{animation:judy-blink 3s ease-in-out infinite}@keyframes judy-blink{0%,88%{ry:0}91%{ry:6.5}95%{ry:0}100%{ry:0}}</style>
+          </svg>
+        </div>
+        <div class="judy-online-dot"></div>
       </div>
-      <div class="chat-body" id="chat-body">
-        <div class="chat-msg bot">Hi! I am your digital assistant. How can I help you today?</div>
+      <div id="judy-info">
+        <div id="judy-name">Judy</div>
+        <div id="judy-sub">NEW RK GLASS &amp; PLYWOOD</div>
       </div>
-      <div class="chat-replies" id="chat-replies">
-        <button class="reply-btn" onclick="handleReply('What do you sell?')">What do you sell?</button>
-        <button class="reply-btn" onclick="handleReply('Store timings')">Store timings</button>
-        <button class="reply-btn" onclick="handleReply('Delivery?')">Delivery?</button>
-        <button class="reply-btn" onclick="handleReply('Contact us')">Contact us</button>
-      </div>
-      <div class="chat-input-area" id="chat-input-area">
-        <input type="text" id="chat-input" placeholder="Type a message..." onkeydown="handleChatPress(event)" />
-        <button id="chat-send-btn" onclick="sendChatMessage()">Send</button>
+      <div id="judy-controls">
+        <button id="judy-lang-btn" onclick="toggleLang()">&#127470;&#127475; हिंदी</button>
+        <button id="judy-close" onclick="toggleJudy()">&#x2715;</button>
       </div>
     </div>
-    <button class="chat-toggle" onclick="toggleChat()" aria-label="Open chat">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/></svg>
-    </button>
+    <div id="judy-body">
+      <canvas id="judy-confetti"></canvas>
+    </div>
+    <div id="judy-chips"></div>
+    <div id="judy-input-row">
+      <input id="judy-input" type="text" placeholder="Type your question…" autocomplete="off"/>
+      <button id="judy-mic" aria-label="Voice input" onclick="toggleVoice()">
+        <svg viewBox="0 0 24 24"><path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3zm5.91-3c-.49 0-.9.36-.98.85C16.52 14.2 14.47 16 12 16s-4.52-1.8-4.93-4.15c-.08-.49-.49-.85-.98-.85-.61 0-1.09.54-1 1.14.49 3 2.89 5.35 5.91 5.78V20c0 .55.45 1 1 1s1-.45 1-1v-2.08c3.02-.43 5.42-2.78 5.91-5.78.1-.6-.39-1.14-1-1.14z"/></svg>
+      </button>
+      <button id="judy-send">
+        <svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
+      </button>
+    </div>
+    <div id="judy-wa-note">&#x1F4AC; Unknown query? We'll redirect you to WhatsApp instantly</div>
   </div>
 
   <script>
     // ── HAPTICS ──
-    const HAPTIC_SELECTOR = ['a','button','.cat-hdr','.g-card','.tab-btn','.soc-btn','.footer-soc','.bar-btn','.chat-toggle','.reply-btn'].join(',');
+    const HAPTIC_SELECTOR = ['a','button','.cat-hdr','.g-card','.tab-btn','.soc-btn','.footer-soc','.bar-btn','.jchip','#judy-launcher'].join(',');
     function pulseHaptic(type='tap'){const p={tap:10,soft:7,success:[8,24,12],open:[6,18,8]};if(window.AndroidHaptics?.performHapticFeedback){window.AndroidHaptics.performHapticFeedback(type);return;}if(window.webkit?.messageHandlers?.haptics){window.webkit.messageHandlers.haptics.postMessage(type);return;}if(navigator.vibrate)navigator.vibrate(p[type]||p.tap);}
-    function getHapticType(el){if(el.matches('.btn-wa,.b-wa,[href*="wa.me"]'))return'success';if(el.matches('.chat-toggle,.g-card,.cat-hdr,.tab-btn'))return'open';return'tap';}
+    function getHapticType(el){if(el.matches('.btn-wa,.b-wa,[href*="wa.me"]'))return'success';if(el.matches('#judy-launcher,.g-card,.cat-hdr,.tab-btn'))return'open';return'tap';}
     document.addEventListener('pointerdown',e=>{const t=e.target.closest(HAPTIC_SELECTOR);if(!t||t.closest('[disabled],[aria-disabled="true"]'))return;pulseHaptic(getHapticType(t));t.classList.add('haptic-press');setTimeout(()=>t.classList.remove('haptic-press'),140);},{passive:true});
     document.querySelectorAll('.hero .btn').forEach(btn=>{btn.addEventListener('pointerdown',e=>{const r=btn.getBoundingClientRect();btn.style.setProperty('--tap-x',`${e.clientX-r.left}px`);btn.style.setProperty('--tap-y',`${e.clientY-r.top}px`);btn.classList.remove('btn-ripple');void btn.offsetWidth;btn.classList.add('btn-ripple');});btn.addEventListener('animationend',e=>{if(e.animationName==='heroRipple')btn.classList.remove('btn-ripple');});});
 
@@ -1171,245 +1216,342 @@
     const LB_ICONS={lb_handles:'<svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M7 8h10a2 2 0 010 4H7"/><path d="M7 8a2 2 0 000 4"/><line x1="7" y1="12" x2="7" y2="16"/><line x1="17" y1="12" x2="17" y2="16"/></svg>',lb_panels:'<svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="3" y1="15" x2="21" y2="15"/><line x1="9" y1="3" x2="9" y2="21"/><line x1="15" y1="3" x2="15" y2="21"/></svg>',lb_glass_p:'<svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="8" height="18" rx="1"/><rect x="13" y="3" width="8" height="18" rx="1"/></svg>',lb_plywood:'<svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="3" rx="0.5"/><rect x="2" y="9" width="20" height="3" rx="0.5"/><rect x="2" y="14" width="20" height="3" rx="0.5"/><rect x="2" y="19" width="20" height="2" rx="0.5"/></svg>',lb_laminates:'<svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M2 7l10-4 10 4-10 4z"/><path d="M2 13l10-4 10 4-10 4z"/><path d="M2 19l10-4 10 4"/></svg>',lb_des_glass:'<svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M3 15h18M9 3v18M15 3v18"/></svg>',lb_wardrobe:'<svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="2" width="18" height="20" rx="1"/><line x1="12" y1="2" x2="12" y2="22"/><circle cx="10" cy="12" r="1" fill="currentColor"/><circle cx="14" cy="12" r="1" fill="currentColor"/></svg>',lb_shower:'<svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="12" height="18" rx="1"/><line x1="15" y1="3" x2="15" y2="21"/><line x1="3" y1="21" x2="21" y2="21"/><line x1="21" y1="3" x2="21" y2="21"/><circle cx="9" cy="10" r="1" fill="currentColor"/></svg>'};
     function openLb(name,icon,desc){document.getElementById('lb-icon').innerHTML=LB_ICONS[icon]||'';document.getElementById('lb-name').textContent=name;document.getElementById('lb-desc').textContent=desc;document.getElementById('lb').classList.add('open');document.body.style.overflow='hidden';}
     function closeLb(e){if(e&&e.target!==document.getElementById('lb')&&!e.target.classList.contains('lb-close'))return;document.getElementById('lb').classList.remove('open');document.body.style.overflow='';}
-    document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeLb({target:document.getElementById('lb')});document.getElementById('chat-panel').classList.remove('open');}});
+    document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeLb({target:document.getElementById('lb')});document.getElementById('judy-panel').classList.remove('open');}});
     const obs=new IntersectionObserver(entries=>{entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add('vis');obs.unobserve(entry.target);}});},{threshold:0.08});
     document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
 
-    // ── KIRAN CHATBOT ──
-    const WA = '917408889888';
+    // ── JUDY CHATBOT ──────────────────────────────────────────────────────────────
+    const JUDY_WA = '917408889888';
+    let judyLang = 'en';
 
-    const KB = {
-      greeting: {
-        answer: "Namaste! Great to have you here. What can I help you with today?",
-        chips: ["What do you sell?", "Store timings", "Where are you?", "Contact us"]
-      },
-      products: {
-        answer: "We stock plywood, glass & mirrors, laminates, fancy hardware, doors, and decorative wall panels — all under one roof. Which category interests you?",
-        chips: ["Tell me about plywood", "Tell me about glass", "Tell me about hardware", "Tell me about laminates"]
-      },
-      plywood: {
-        answer: "We carry Commercial Plywood, Hardwood Plywood, Block Boards, HDMR, MDF, WPC and PVC Boards — all ISI-certified and from trusted brands.",
-        chips: ["Tell me about glass", "Tell me about hardware", "Price / cost?", "Contact us"]
-      },
-      glass: {
-        answer: "Our glass range includes Toughened Glass, Designer Glass, Decorative Glass, Shower Cubicles, Glass Partitions and Premium Mirrors.",
-        chips: ["Tell me about laminates", "Tell me about hardware", "Price / cost?", "Contact us"]
-      },
-      laminates: {
-        answer: "We offer High Gloss, Textured, Acrylic and Decorative Laminates, plus Mica Sheets and Veneers — hundreds of shades and finishes available.",
-        chips: ["Tell me about plywood", "Tell me about hardware", "Price / cost?", "Contact us"]
-      },
-      hardware: {
-        answer: "Our hardware range covers door & cabinet handles, mortise locks, tower bolts, kitchen & cutlery baskets, tandem systems, soft-close drawer channels, profile handles and more.",
-        chips: ["Tell me about doors", "Tell me about wall panels", "Price / cost?", "Contact us"]
-      },
-      doors: {
-        answer: "We stock Flush Doors, Ready-made Doors and Wooden Doors in various finishes to suit every budget and style.",
-        chips: ["Tell me about hardware", "Tell me about wall panels", "Price / cost?", "Contact us"]
-      },
-      wallpanels: {
-        answer: "For walls we have Louvers Panels, CNC Panels, Wall Cladding, Charcoal Panels, Decorative Panels and Mouldings — perfect for modern interiors.",
-        chips: ["Tell me about laminates", "Tell me about glass", "Price / cost?", "Contact us"]
-      },
-      timings: {
-        answer: "Our showroom is open Monday to Saturday, 10:30 AM – 8:30 PM. We are closed on Sundays.",
-        chips: ["Where are you?", "Contact us", "Delivery?"]
-      },
-      location: {
-        answer: "We're at Manduadih Road, Sarkaripura Rd, Manduwadih, Varanasi — just ahead of the Police Station. Look for the RK signage!",
-        chips: ["Get directions", "Store timings", "Contact us"]
-      },
-      directions: {
-        answer: "Tap the button below to open our location in Google Maps. We're easy to find near Manduadih Police Station, Varanasi.",
-        chips: ["Store timings", "Contact us"],
-        action: () => window.open('https://maps.google.com/?q=New+RK+Glass+Plywood+Centre+Manduadih+Varanasi','_blank')
-      },
-      delivery: {
-        answer: "Yes, we deliver large orders across Varanasi and nearby areas. Delivery charges depend on the volume and distance. Call us for a quote.",
-        chips: ["Price / cost?", "Contact us", "Bulk / contractor orders?"]
-      },
-      price: {
-        answer: "Pricing depends on the brand, grade and quantity. For an accurate quote please call or WhatsApp us — we'll get back to you quickly!",
-        chips: ["Contact us", "Delivery?", "Bulk / contractor orders?"]
-      },
-      brands: {
-        answer: "We stock products only from reputed, ISI-certified brands. All our materials are quality-tested — no local or substandard goods.",
-        chips: ["Tell me about plywood", "Price / cost?", "Contact us"]
-      },
-      bulk: {
-        answer: "We regularly supply contractors, architects and interior designers. For bulk or project orders, call Mr. Ankit Motwani directly for the best pricing.",
-        chips: ["Contact us", "Price / cost?", "Delivery?"]
-      },
-      warranty: {
-        answer: "Our products come with manufacturer warranties where applicable. ISI-certified goods meet Bureau of Indian Standards quality norms.",
-        chips: ["Tell me about plywood", "Contact us"]
-      },
-      contact: {
-        answer: "Call or WhatsApp Mr. Ankit Motwani at +91 74088 89888. You can also find us on Instagram @newrkglassandplywoodcentre.",
-        chips: ["Store timings", "Where are you?", "Delivery?"]
-      },
-      thanks: {
-        answer: "You're welcome! Feel free to ask if you have more questions. We're happy to help. 😊",
-        chips: ["What do you sell?", "Contact us"]
-      },
-      instagram: {
-        answer: "Find us on Instagram at @newrkglassandplywoodcentre for product photos, new arrivals and interior inspiration!",
-        chips: ["Contact us", "What do you sell?"]
-      }
-    };
+    // Sound
+    let judyAudioCtx = null;
+    function judyPlayPop() {
+      try {
+        if (!judyAudioCtx) judyAudioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        const osc = judyAudioCtx.createOscillator();
+        const gain = judyAudioCtx.createGain();
+        osc.connect(gain); gain.connect(judyAudioCtx.destination);
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(900, judyAudioCtx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(450, judyAudioCtx.currentTime + 0.07);
+        gain.gain.setValueAtTime(0.07, judyAudioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, judyAudioCtx.currentTime + 0.13);
+        osc.start(); osc.stop(judyAudioCtx.currentTime + 0.13);
+      } catch(e) {}
+    }
 
-    const RULES = [
-      [['hi','hello','hey','namaste','hlo','hii','good morning','good afternoon','good evening','sup','howdy'], 'greeting'],
-      [['plywood','ply','hardwood','block board','mdf','wpc','pvc','hdmr','board','timber'], 'plywood'],
-      [['glass','mirror','toughened','shower','partition','frosted','decorative glass'], 'glass'],
-      [['laminate','mica','veneer','acrylic','gloss','texture','surface','sheet'], 'laminates'],
-      [['hardware','handle','lock','hinge','bolt','basket','drawer','tandem','soft close','soft-close','aldrop','stopper'], 'hardware'],
-      [['door','flush','wooden','readymade','ready made'], 'doors'],
-      [['wall panel','louver','cladding','cnc panel','charcoal panel','moulding','panel'], 'wallpanels'],
-      [['sell','product','catalogue','catalog','range','item','stock','carry','available','do you have'], 'products'],
-      [['time','timing','open','close','hour','when','sunday','saturday','monday','holiday'], 'timings'],
-      [['where','location','address','find you','find us','place','map','near','manduadih','varanasi','how to reach','kahan'], 'location'],
-      [['direction','navigate','google map'], 'directions'],
-      [['deliver','delivery','shipping','ship','send','courier'], 'delivery'],
-      [['price','cost','rate','kitna','how much','charge','budget','expensive','cheap','affordable','quote'], 'price'],
-      [['brand','company','manufacturer','isi','certified','quality','original','genuine'], 'brands'],
-      [['bulk','contractor','wholesale','project','architect','designer','quantity'], 'bulk'],
-      [['warranty','guarantee'], 'warranty'],
-      [['contact','call','phone','number','whatsapp','reach','owner','ankit','motwani','talk'], 'contact'],
-      [['thank','thanks','shukriya','dhanyavad','ok great','awesome','perfect'], 'thanks'],
-      [['instagram','insta','social','facebook'], 'instagram'],
+    // Festival detection
+    const JUDY_FESTIVALS = [
+      { name:'🪔 Diwali', dates:[[9,20],[9,21],[9,22],[9,23],[9,24]] },
+      { name:'🎨 Holi',   dates:[[1,24],[1,25],[1,26]] },
+      { name:'🙏 Dussehra', dates:[[8,11],[8,12],[8,13]] },
+      { name:'🎉 Navratri', dates:[[8,3],[8,4],[8,5],[8,6],[8,7],[8,8],[8,9],[8,10]] },
+      { name:'🪔 Chhath',   dates:[[9,28],[9,29],[9,30]] },
     ];
-
-    function matchIntent(msg) {
-      const lc = msg.toLowerCase();
-      for (const [keywords, key] of RULES) {
-        if (keywords.some(kw => lc.includes(kw))) return key;
+    function judyGetFestival() {
+      const m = new Date().getMonth(), d = new Date().getDate();
+      for (const f of JUDY_FESTIVALS) if (f.dates.some(([fm,fd]) => fm===m && fd===d)) return f.name;
+      return null;
+    }
+    function judyGetSeasonNote() {
+      const m = new Date().getMonth();
+      if (m>=5&&m<=8) return {en:"Monsoon tip: our moisture-resistant plywood is flying off the shelves! 🌧️",hi:"Barsaat mein moisture-resistant plywood sabse zyada bikta hai! 🌧️"};
+      if (m>=9&&m<=10) return {en:"Festival season is here — perfect time for a home upgrade! 🪔",hi:"Tyoharon ka mausam — ghar sajane ka sahi waqt! 🪔"};
+      if (m===11||m<=1) return {en:"Winter is ideal for interior work while the weather is cool ❄️",hi:"Thandi mein ghar ka renovation sabse aasaan hota hai ❄️"};
+      return null;
+    }
+    function judyGetMoodGreeting() {
+      const h = new Date().getHours();
+      const festival = judyGetFestival();
+      const season = judyGetSeasonNote();
+      if (festival) return {
+        en:`${festival} — great time to upgrade your interiors! How can I help?`,
+        hi:`${festival} — ghar ko nayi roshni do! Kya main madad kar sakti hoon?`
+      };
+      let base;
+      if      (h>=5&&h<12)  base={en:"Good morning! Early bird shopping? ☀️ You've got great taste.",hi:"Subh prabhat! Itni subah shopping? ☀️ Wah, zabardast!"};
+      else if (h>=12&&h<17) base={en:"Good afternoon! 🌤️ Looking to upgrade your space? You're in the right place.",hi:"Namaskar! 🌤️ Ghar ko naya look dena hai? Sahi jagah aaye!"};
+      else if (h>=17&&h<20) base={en:"Good evening! 🌆 Planning home improvements after a long day? Let's go.",hi:"Shubh sandhya! 🌆 Din bhar ke baad ghar ke liye soch rahe hain? Main hoon na!"};
+      else                  base={en:"Working late? We've got you covered 🌙 Browse our full range anytime.",hi:"Itni raat ko? 🌙 Hum hamesha aapke liye yahan hain!"};
+      if (season) {
+        base.en += `<br><br><em style="color:#666;font-size:12.5px">💡 ${season.en}</em>`;
+        base.hi += `<br><br><em style="color:#666;font-size:12.5px">💡 ${season.hi}</em>`;
       }
+      return base;
+    }
+
+    const JUDY_THINK_EN = ["Looking that up…","Great question…","Let me check…","One moment…","On it…","Sure thing…"];
+    const JUDY_THINK_HI = ["Dekhti hoon…","Achha sawaal…","Ek second…","Bilkul…","Abhi batati hoon…"];
+    function judyRandomThink() {
+      const arr = judyLang==='hi' ? JUDY_THINK_HI : JUDY_THINK_EN;
+      return arr[Math.floor(Math.random()*arr.length)];
+    }
+
+    const JUDY_KB_EN = {
+      greeting:   { get answer(){ const g=judyGetMoodGreeting(); return `Hi! I'm <strong>Judy</strong>, your virtual assistant for <strong>New RK Glass &amp; Plywood Centre, Varanasi</strong> 🏠<br><br>${g.en}<br><br>What would you like to know?`; }, chips:["What do you sell?","Store timings","Where are you?","Contact us"] },
+      products:   { answer:"We stock <strong>plywood, glass &amp; mirrors, laminates, fancy hardware, doors,</strong> and <strong>decorative wall panels</strong> — all under one roof. Which category?", chips:["Tell me about plywood","Tell me about glass","Tell me about hardware","Tell me about laminates"] },
+      plywood:    { answer:"We carry <strong>Commercial Plywood, Hardwood Plywood, Block Boards, HDMR, MDF, WPC</strong> and <strong>PVC Boards</strong> — all ISI-certified.", chips:["Tell me about glass","Tell me about hardware","Price / cost?","Contact us"] },
+      glass:      { answer:"Our glass range includes <strong>Toughened Glass, Designer Glass, Decorative Glass, Shower Cubicles, Glass Partitions</strong> and <strong>Premium Mirrors</strong>.", chips:["Tell me about laminates","Tell me about hardware","Price / cost?","Contact us"] },
+      laminates:  { answer:"We offer <strong>High Gloss, Textured, Acrylic</strong> and <strong>Decorative Laminates</strong>, plus Mica Sheets and Veneers — hundreds of shades.", chips:["Tell me about plywood","Tell me about hardware","Price / cost?","Contact us"] },
+      hardware:   { answer:"Our hardware covers <strong>handles, mortise locks, tower bolts, kitchen baskets, tandem systems, soft-close channels, profile handles</strong> and more.", chips:["Tell me about doors","Tell me about wall panels","Price / cost?","Contact us"] },
+      doors:      { answer:"We stock <strong>Flush Doors, Ready-made Doors</strong> and <strong>Wooden Doors</strong> in various finishes for every budget.", chips:["Tell me about hardware","Tell me about wall panels","Price / cost?","Contact us"] },
+      wallpanels: { answer:"For walls: <strong>Louvers Panels, CNC Panels, Wall Cladding, Charcoal Panels, Decorative Panels</strong> and <strong>Mouldings</strong> — perfect for modern interiors.", chips:["Tell me about laminates","Tell me about glass","Price / cost?","Contact us"] },
+      timings:    { answer:"Open <strong>Monday–Saturday, 10:30 AM – 8:30 PM</strong>. <strong>Closed Sundays</strong>.", chips:["Where are you?","Contact us","Delivery?"] },
+      location:   { answer:"We're at <strong>Manduadih Road, Sarkaripura Rd, Manduwadih, Varanasi</strong> — just ahead of the Police Station. Look for the <strong>RK signage</strong>!", chips:["Get directions","Store timings","Contact us"] },
+      directions: { answer:"Tap below to open in Google Maps. Easy to find near <strong>Manduadih Police Station, Varanasi</strong>.", chips:["Store timings","Contact us"], action:()=>window.open('https://maps.google.com/?q=New+RK+Glass+Plywood+Centre+Manduadih+Varanasi','_blank') },
+      delivery:   { answer:"Yes! We deliver large orders across <strong>Varanasi and nearby areas</strong>. Charges depend on volume and distance — call us for a quote.", chips:["Price / cost?","Contact us","Bulk / contractor orders?"] },
+      price:      { answer:"Pricing depends on brand, grade and quantity. <strong>Call or WhatsApp us</strong> for an accurate quote — we respond fast!", chips:["Contact us","Delivery?","Bulk / contractor orders?"] },
+      brands:     { answer:"We only stock <strong>reputed, ISI-certified brands</strong>. No local or substandard goods — ever.", chips:["Tell me about plywood","Price / cost?","Contact us"] },
+      bulk:       { answer:"We supply <strong>contractors, architects and interior designers</strong> regularly. Call Mr. <strong>Ankit Motwani</strong> directly for the best bulk pricing.", chips:["Contact us","Price / cost?","Delivery?"] },
+      warranty:   { answer:"Products come with <strong>manufacturer warranties</strong> where applicable. ISI-certified goods meet Bureau of Indian Standards norms.", chips:["Tell me about plywood","Contact us"] },
+      contact:    { answer:"Call or WhatsApp <strong>Mr. Ankit Motwani</strong> at <strong>+91 74088 89888</strong>. Instagram: <strong>@newrkglassandplywoodcentre</strong>.", chips:["Store timings","Where are you?","Delivery?"] },
+      thanks:     { answer:"You're welcome! Ask anything else — happy to help 😊", chips:["What do you sell?","Contact us"] },
+      instagram:  { answer:"Follow us on Instagram: <strong>@newrkglassandplywoodcentre</strong> — product photos, new arrivals and interior inspiration!", chips:["Contact us","What do you sell?"] },
+      banarasi:   { answer:"🙏 <strong>Jai Kashi Vishwanath!</strong><br><br>Ae bhai, Kashi ki dharti pe aapka swagat ba! Hamaar New RK Glass &amp; Plywood pe aail ba matlab ghar ke liye sabse badhiya saman milega — full guarantee ke saath! Plywood chahie, glass chahie, ya kuch aur — Ankit bhaiya seedha deal karenge. <strong>Bam Bam Bhole! 🙏</strong>", chips:["What do you sell?","Contact us","Where are you?"] },
+    };
+    const JUDY_KB_HI = {
+      greeting:   { get answer(){ const g=judyGetMoodGreeting(); return `Namaskar! Main hoon <strong>Judy</strong> — <strong>New RK Glass &amp; Plywood Centre, Varanasi</strong> ki sahayika 🏠<br><br>${g.hi}<br><br>Aap kya jaanna chahte hain?`; }, chips:["Kya milta hai?","Dukaan ka waqt","Kahan hain aap?","Sampark karein"] },
+      products:   { answer:"Hamare paas <strong>plywood, glass, mirrors, laminates, hardware, doors</strong> aur <strong>decorative wall panels</strong> — sab ek hi jagah. Kaunsi cheez chahiye?", chips:["Plywood ke baare mein","Glass ke baare mein","Hardware ke baare mein","Laminates ke baare mein"] },
+      plywood:    { answer:"<strong>Commercial Plywood, Hardwood Plywood, Block Board, HDMR, MDF, WPC</strong> aur <strong>PVC Board</strong> — sab ISI-certified.", chips:["Glass ke baare mein","Hardware ke baare mein","Daam kya hai?","Sampark karein"] },
+      glass:      { answer:"<strong>Toughened Glass, Designer Glass, Decorative Glass, Shower Cubicle, Glass Partition</strong> aur <strong>Premium Mirrors</strong> — sab available hain.", chips:["Laminates ke baare mein","Hardware ke baare mein","Daam kya hai?","Sampark karein"] },
+      laminates:  { answer:"<strong>High Gloss, Textured, Acrylic</strong> aur <strong>Decorative Laminates</strong> — saath mein Mica Sheets aur Veneers bhi. Saikdon rang!", chips:["Plywood ke baare mein","Hardware ke baare mein","Daam kya hai?","Sampark karein"] },
+      hardware:   { answer:"<strong>Handles, mortise locks, tower bolts, kitchen baskets, tandem systems, soft-close channels, profile handles</strong> — aur bahut kuch.", chips:["Doors ke baare mein","Wall panels ke baare mein","Daam kya hai?","Sampark karein"] },
+      doors:      { answer:"<strong>Flush Doors, Ready-made Doors</strong> aur <strong>Wooden Doors</strong> — har budget aur style ke liye.", chips:["Hardware ke baare mein","Wall panels ke baare mein","Daam kya hai?","Sampark karein"] },
+      wallpanels: { answer:"<strong>Louvers Panels, CNC Panels, Wall Cladding, Charcoal Panels, Decorative Panels</strong> aur <strong>Mouldings</strong> — modern interiors ke liye.", chips:["Laminates ke baare mein","Glass ke baare mein","Daam kya hai?","Sampark karein"] },
+      timings:    { answer:"Dukaan <strong>Somwar se Shaniwar, 10:30 AM – 8:30 PM</strong> khuli rehti hai. <strong>Ravivar ko band</strong>.", chips:["Kahan hain aap?","Sampark karein","Delivery?"] },
+      location:   { answer:"Hum hain <strong>Manduadih Road, Sarkaripura Rd, Manduwadih, Varanasi</strong> — Police Station ke thoda aage. <strong>RK sign</strong> dekhiyega!", chips:["Rasta dikhao","Dukaan ka waqt","Sampark karein"] },
+      directions: { answer:"Neeche tap karein — Google Maps mein hamara pata khul jaayega. <strong>Manduadih Police Station</strong> ke paas hain.", chips:["Dukaan ka waqt","Sampark karein"], action:()=>window.open('https://maps.google.com/?q=New+RK+Glass+Plywood+Centre+Manduadih+Varanasi','_blank') },
+      delivery:   { answer:"Haan! <strong>Varanasi aur aas-paas</strong> delivery karte hain. Charge matra aur doori par depend karta hai — ek baar call karein.", chips:["Daam kya hai?","Sampark karein","Bulk orders?"] },
+      price:      { answer:"Daam brand, grade aur quantity par depend karta hai. <strong>Call ya WhatsApp karein</strong> — jaldi jawab milega!", chips:["Sampark karein","Delivery?","Bulk orders?"] },
+      brands:     { answer:"Sirf <strong>ISI-certified aur bharosemand brands</strong> — koi ghati ya local maal nahi.", chips:["Plywood ke baare mein","Daam kya hai?","Sampark karein"] },
+      bulk:       { answer:"<strong>Contractors, architects aur interior designers</strong> ko niyamit supply karte hain. Bulk ke liye seedha <strong>Ankit Motwani ji</strong> se baat karein.", chips:["Sampark karein","Daam kya hai?","Delivery?"] },
+      warranty:   { answer:"Hamare products par <strong>manufacturer warranty</strong> milti hai jahan applicable ho.", chips:["Plywood ke baare mein","Sampark karein"] },
+      contact:    { answer:"<strong>Mr. Ankit Motwani</strong> — <strong>+91 74088 89888</strong> (Call/WhatsApp). Instagram: <strong>@newrkglassandplywoodcentre</strong>.", chips:["Dukaan ka waqt","Kahan hain aap?","Delivery?"] },
+      thanks:     { answer:"Bahut shukriya! Koi aur sawaal ho toh zaroor poochein 😊", chips:["Kya milta hai?","Sampark karein"] },
+      instagram:  { answer:"Instagram: <strong>@newrkglassandplywoodcentre</strong> — nayi products, photos aur interior inspiration!", chips:["Sampark karein","Kya milta hai?"] },
+      banarasi:   { answer:"🙏 <strong>Jai Kashi Vishwanath!</strong><br><br>Ae bhai, Kashi ki dharti pe aapka swagat ba! Hamaar New RK Glass &amp; Plywood pe aail ba matlab ghar ke liye sabse badhiya saman milega — full guarantee ke saath! Ankit bhaiya seedha deal karenge. <strong>Bam Bam Bhole! 🙏</strong>", chips:["Kya milta hai?","Sampark karein","Kahan hain aap?"] },
+    };
+    function judyKB() { return judyLang==='hi' ? JUDY_KB_HI : JUDY_KB_EN; }
+
+    const JUDY_BANARASI_KW = ['jai kashi','bam bam','bholenath','mahadev','kashi vishwanath','har har','banarasi','banaras'];
+    const JUDY_RULES_EN = [
+      [['plywood','ply','hardwood','block board','mdf','wpc','pvc','hdmr','board','timber'],'plywood'],
+      [['glass','mirror','toughened','shower','partition','frosted','decorative glass'],'glass'],
+      [['laminate','mica','veneer','acrylic','gloss','texture','surface','sheet'],'laminates'],
+      [['hardware','handle','lock','hinge','bolt','basket','drawer','tandem','soft close','soft-close','aldrop','stopper'],'hardware'],
+      [['door','flush','wooden','readymade','ready made'],'doors'],
+      [['wall panel','louver','cladding','cnc panel','charcoal panel','moulding','panel'],'wallpanels'],
+      [['sell','product','catalogue','catalog','range','item','stock','carry','available','do you have'],'products'],
+      [['time','timing','open','close','hour','when','sunday','saturday','monday','holiday'],'timings'],
+      [['where','location','address','find you','find us','place','map','near','manduadih','varanasi','how to reach'],'location'],
+      [['direction','navigate','google map'],'directions'],
+      [['deliver','delivery','shipping','ship','send','courier'],'delivery'],
+      [['price','cost','rate','kitna','how much','charge','budget','expensive','cheap','affordable','quote','daam'],'price'],
+      [['brand','company','manufacturer','isi','certified','quality','original','genuine'],'brands'],
+      [['bulk','contractor','wholesale','project','architect','designer','quantity'],'bulk'],
+      [['warranty','guarantee'],'warranty'],
+      [['contact','call','phone','number','whatsapp','reach','owner','ankit','motwani','talk','sampark'],'contact'],
+      [['thank','thanks','shukriya','dhanyavad','ok great','awesome','perfect','great','good'],'thanks'],
+      [['instagram','insta','social','facebook'],'instagram'],
+      [['hi','hello','hey','namaste','hlo','hii','good morning','good afternoon','good evening','sup','howdy','who are you','introduce'],'greeting'],
+    ];
+    const JUDY_RULES_HI = [
+      [['plywood','ply','block board','mdf','wpc','pvc','hdmr','board'],'plywood'],
+      [['glass','mirror','sheeshe','toughened','shower','partition'],'glass'],
+      [['laminate','mica','veneer','acrylic'],'laminates'],
+      [['hardware','handle','lock','hinge','bolt','basket','drawer'],'hardware'],
+      [['door','darwaza','flush'],'doors'],
+      [['wall panel','louver','cladding','panel','deewar'],'wallpanels'],
+      [['kya milta','product','range','saman','available','stock'],'products'],
+      [['time','waqt','samay','khula','band','kab','ravivar','somwar'],'timings'],
+      [['kahan','location','pata','address','manduadih','varanasi','kaise pahunche'],'location'],
+      [['rasta','direction','google map','naksha'],'directions'],
+      [['delivery','pahunchana','bhejte'],'delivery'],
+      [['daam','price','rate','kitna','cost','mehnga','sasta','quote'],'price'],
+      [['brand','company','isi','certified','quality','asli'],'brands'],
+      [['bulk','contractor','wholesale','project','architect'],'bulk'],
+      [['warranty','guarantee'],'warranty'],
+      [['contact','call','phone','whatsapp','sampark','ankit','motwani'],'contact'],
+      [['shukriya','dhanyavad','thanks','thank','bahut accha','great','perfect'],'thanks'],
+      [['instagram','insta','social'],'instagram'],
+      [['namaskar','namaste','hello','hi','hey','kaun ho','parichay'],'greeting'],
+    ];
+    const JUDY_CHIP_MAP_EN = {"What do you sell?":"products","Store timings":"timings","Delivery?":"delivery","Where are you?":"location","Get directions":"directions","Contact us":"contact","Price / cost?":"price","Tell me about plywood":"plywood","Tell me about glass":"glass","Tell me about hardware":"hardware","Tell me about laminates":"laminates","Tell me about doors":"doors","Tell me about wall panels":"wallpanels","Bulk / contractor orders?":"bulk"};
+    const JUDY_CHIP_MAP_HI = {"Kya milta hai?":"products","Dukaan ka waqt":"timings","Delivery?":"delivery","Kahan hain aap?":"location","Rasta dikhao":"directions","Sampark karein":"contact","Daam kya hai?":"price","Plywood ke baare mein":"plywood","Glass ke baare mein":"glass","Hardware ke baare mein":"hardware","Laminates ke baare mein":"laminates","Doors ke baare mein":"doors","Wall panels ke baare mein":"wallpanels","Bulk orders?":"bulk"};
+    function judyChipMap() { return judyLang==='hi' ? JUDY_CHIP_MAP_HI : JUDY_CHIP_MAP_EN; }
+
+    function judyMatchIntent(msg) {
+      const lc = msg.toLowerCase();
+      if (JUDY_BANARASI_KW.some(k => lc.includes(k))) return 'banarasi';
+      const rules = judyLang==='hi' ? JUDY_RULES_HI : JUDY_RULES_EN;
+      for (const [kws, key] of rules) if (kws.some(kw => lc.includes(kw))) return key;
       return null;
     }
 
-    function addMessage(text, type) {
-      const body = document.getElementById('chat-body');
+    function judyLaunchConfetti() {
+      const canvas = document.getElementById('judy-confetti');
+      const body = document.getElementById('judy-body');
+      const ctx = canvas.getContext('2d');
+      canvas.width = body.offsetWidth; canvas.height = body.offsetHeight;
+      const COLS = ['#ff6b35','#f7c59f','#00a8e8','#ffd700','#22c55e','#ff4da6'];
+      const pieces = Array.from({length:55},()=>({
+        x:Math.random()*canvas.width, y:-10-Math.random()*30,
+        r:4+Math.random()*5, d:Math.random()*60+20,
+        color:COLS[Math.floor(Math.random()*COLS.length)],
+        tilt:Math.random()*10-5, tiltInc:0.07*(Math.random()-.5), opacity:1
+      }));
+      let frame=0;
+      (function draw(){
+        ctx.clearRect(0,0,canvas.width,canvas.height);
+        pieces.forEach(p=>{
+          p.y+=2.5; p.x+=Math.sin(frame*0.02+p.d)*0.8;
+          p.tilt+=p.tiltInc; p.opacity-=0.009;
+          if(p.opacity<=0) return;
+          ctx.save(); ctx.globalAlpha=Math.max(0,p.opacity);
+          ctx.fillStyle=p.color; ctx.beginPath();
+          ctx.ellipse(p.x,p.y,p.r,p.r*0.4,p.tilt,0,Math.PI*2);
+          ctx.fill(); ctx.restore();
+        });
+        if(++frame<160) requestAnimationFrame(draw);
+        else ctx.clearRect(0,0,canvas.width,canvas.height);
+      })();
+    }
+
+    function judyShowThinking() {
+      const body = document.getElementById('judy-body');
       const el = document.createElement('div');
-      el.className = 'chat-msg ' + type;
-      el.innerHTML = text;
-      body.appendChild(el);
-      body.scrollTop = body.scrollHeight;
+      el.className='judy-thinking'; el.id='judy-typing';
+      el.innerHTML=`<div class="judy-thinking-dots"><span></span><span></span><span></span></div><span class="judy-thinking-text">${judyRandomThink()}</span>`;
+      body.appendChild(el); body.scrollTop=body.scrollHeight;
+    }
+    function judyRemoveThinking() { document.getElementById('judy-typing')?.remove(); }
+
+    function judyAddMsg(html, type) {
+      const body = document.getElementById('judy-body');
+      const el=document.createElement('div');
+      el.className='jmsg '+type;
+      el.innerHTML=html; body.appendChild(el);
+      body.scrollTop=body.scrollHeight;
+      if(type==='bot'||type==='bot intro') judyPlayPop();
     }
 
-    function showTyping() {
-      const body = document.getElementById('chat-body');
-      const el = document.createElement('div');
-      el.className = 'chat-msg bot typing-indicator';
-      el.id = 'typing-bubble';
-      el.innerHTML = '<span></span><span></span><span></span>';
-      body.appendChild(el);
-      body.scrollTop = body.scrollHeight;
-      return el;
-    }
-
-    function removeTyping() {
-      document.getElementById('typing-bubble')?.remove();
-    }
-
-    function setChips(list) {
-      const bar = document.getElementById('chat-replies');
-      bar.innerHTML = '';
-      list.forEach(label => {
-        const btn = document.createElement('button');
-        btn.className = 'reply-btn';
-        btn.textContent = label;
-        btn.onclick = () => handleReply(label);
-        bar.appendChild(btn);
+    function judySetChips(list) {
+      const chips = document.getElementById('judy-chips');
+      chips.innerHTML='';
+      list.forEach(label=>{
+        const btn=document.createElement('button');
+        btn.className='jchip'; btn.textContent=label;
+        btn.onclick=()=>judyHandleChip(label);
+        chips.appendChild(btn);
       });
     }
 
-    function labelToKey(label) {
-      const map = {
-        "What do you sell?": "products",
-        "Store timings": "timings",
-        "Delivery?": "delivery",
-        "Where are you?": "location",
-        "Get directions": "directions",
-        "Contact us": "contact",
-        "Price / cost?": "price",
-        "Tell me about plywood": "plywood",
-        "Tell me about glass": "glass",
-        "Tell me about hardware": "hardware",
-        "Tell me about laminates": "laminates",
-        "Tell me about doors": "doors",
-        "Tell me about wall panels": "wallpanels",
-        "Bulk / contractor orders?": "bulk",
-      };
-      return map[label] || matchIntent(label);
-    }
+    function judyFallbackChips() { return judyLang==='hi' ? ["Kya milta hai?","Sampark karein"] : ["What do you sell?","Contact us"]; }
 
-    function revealInput(waMode) {
-      const area = document.getElementById('chat-input-area');
-      area.style.display = 'flex';
-      const btn = document.getElementById('chat-send-btn');
-      if (waMode) {
-        btn.textContent = '→ WhatsApp';
-        btn.style.background = 'var(--green)';
-      }
-    }
-
-    function respond(key, delay = 520) {
-      const entry = KB[key];
-      if (!entry) return false;
-      showTyping();
-      setTimeout(() => {
-        removeTyping();
-        addMessage(entry.answer, 'bot');
-        if (entry.action) setTimeout(entry.action, 300);
-        if (entry.chips?.length) {
-          setChips(entry.chips);
-        } else {
-          setChips(["What do you sell?", "Contact us"]);
-        }
-      }, delay);
+    function judyRespond(key, delay=520) {
+      const entry=judyKB()[key]; if(!entry) return false;
+      judyShowThinking();
+      setTimeout(()=>{
+        judyRemoveThinking();
+        judyAddMsg(entry.answer,'bot');
+        if(entry.action) setTimeout(entry.action,300);
+        judySetChips(entry.chips||judyFallbackChips());
+      },delay);
       return true;
     }
 
-    function toggleChat() {
-      const panel = document.getElementById('chat-panel');
+    function judyHandleChip(label) {
+      judyAddMsg(label,'user');
+      const key=judyChipMap()[label]||judyMatchIntent(label);
+      if(key&&judyRespond(key)) return;
+      judyNoMatch(label);
+    }
+
+    function judyNoMatch(msg) {
+      judyShowThinking();
+      setTimeout(()=>{
+        judyRemoveThinking();
+        const txt=judyLang==='hi'
+          ?"Yeh toh mujhe pata nahi — hamaari team WhatsApp par aapki madad karegi! 🚀"
+          :"I'm not sure about that — connecting you with our team on <strong>WhatsApp</strong>! 🚀";
+        judyAddMsg(txt,'bot'); judySetChips(judyFallbackChips());
+        judyLaunchConfetti();
+        setTimeout(()=>window.open(`https://wa.me/${JUDY_WA}?text=${encodeURIComponent(msg)}`,'_blank'),700);
+      },520);
+    }
+
+    function judySendMessage() {
+      const input = document.getElementById('judy-input');
+      const msg=input.value.trim(); if(!msg) return;
+      judyAddMsg(msg,'user'); input.value='';
+      const key=judyMatchIntent(msg);
+      if(key){judyRespond(key);return;}
+      judyShowThinking();
+      setTimeout(()=>{
+        judyRemoveThinking();
+        const txt=judyLang==='hi'
+          ?"Iska jawab mujhe nahi pata — WhatsApp khol rahi hoon! 💬"
+          :"No answer found — opening <strong>WhatsApp</strong> so our team can help directly! 💬";
+        judyAddMsg(txt,'bot'); judySetChips(judyFallbackChips());
+        judyLaunchConfetti();
+        setTimeout(()=>window.open(`https://wa.me/${JUDY_WA}?text=${encodeURIComponent(msg)}`,'_blank'),800);
+      },520);
+    }
+
+    document.getElementById('judy-send').onclick=judySendMessage;
+    document.getElementById('judy-input').addEventListener('keydown',e=>{if(e.key==='Enter')judySendMessage();});
+
+    function toggleLang() {
+      judyLang=judyLang==='en'?'hi':'en';
+      document.getElementById('judy-lang-btn').textContent=judyLang==='hi'?'🇬🇧 English':'🇮🇳 हिंदी';
+      document.getElementById('judy-input').placeholder=judyLang==='hi'?'Apna sawaal likhein…':'Type your question…';
+      judyShowThinking();
+      setTimeout(()=>{
+        judyRemoveThinking();
+        const msg=judyLang==='hi'?"Ab main Hindi mein baat kar sakti hoon! 🙏 Kya poochna chahte hain?":"Switched to English! How can I help? 😊";
+        judyAddMsg(msg,'bot'); judySetChips(judyKB().greeting.chips);
+      },420);
+    }
+
+    let judyRecognition=null, judyIsRecording=false;
+    function toggleVoice() {
+      const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+      const micBtn=document.getElementById('judy-mic');
+      if(!SR){judyAddMsg(judyLang==='hi'?"Voice input Chrome pe kaam karta hai 🎙️":"Voice input works on Chrome/Android 🎙️",'bot');return;}
+      if(judyIsRecording){judyRecognition?.stop();return;}
+      judyRecognition=new SR();
+      judyRecognition.lang=judyLang==='hi'?'hi-IN':'en-IN';
+      judyRecognition.interimResults=false; judyRecognition.maxAlternatives=1;
+      judyRecognition.onstart=()=>{judyIsRecording=true;micBtn.classList.add('recording');};
+      judyRecognition.onend=()=>{judyIsRecording=false;micBtn.classList.remove('recording');};
+      judyRecognition.onerror=()=>{judyIsRecording=false;micBtn.classList.remove('recording');};
+      judyRecognition.onresult=e=>{document.getElementById('judy-input').value=e.results[0][0].transcript;judySendMessage();};
+      judyRecognition.start();
+    }
+
+    function initJudyFestiveBanner() {
+      const f=judyGetFestival();
+      const banner=document.getElementById('judy-festive-banner');
+      if(f){banner.textContent=`${f} — Special offers awaiting inside!`;banner.style.display='block';}
+    }
+
+    let judyOpened = false;
+    function toggleJudy() {
+      const panel=document.getElementById('judy-panel');
       panel.classList.toggle('open');
-    }
-
-    function handleChatPress(e) { if (e.key === 'Enter') sendChatMessage(); }
-
-    function handleReply(label) {
-      const key = labelToKey(label);
-      addMessage(label, 'user');
-      if (key && respond(key)) return;
-      showTyping();
-      setTimeout(() => {
-        removeTyping();
-        addMessage("I'm not sure about that one. Type your question below and I'll connect you directly to our team on WhatsApp!", 'bot');
-        setChips([]);
-        revealInput(true);
-      }, 500);
-    }
-
-    function sendChatMessage() {
-      const input = document.getElementById('chat-input');
-      const msg = input.value.trim();
-      if (!msg) return;
-      addMessage(msg, 'user');
-      input.value = '';
-      const key = matchIntent(msg);
-      if (key) {
-        respond(key);
-        return;
+      if(panel.classList.contains('open') && !judyOpened){
+        judyOpened = true;
+        initJudyFestiveBanner();
+        setTimeout(()=>{
+          judyShowThinking();
+          setTimeout(()=>{
+            judyRemoveThinking();
+            judyAddMsg(judyKB().greeting.answer,'bot intro');
+            judySetChips(judyKB().greeting.chips);
+          },900);
+        },300);
       }
-      showTyping();
-      setTimeout(() => {
-        removeTyping();
-        addMessage("I couldn't find an answer for that — connecting you to our team on WhatsApp now! 🚀", 'bot');
-        setTimeout(() => {
-          window.open(`https://wa.me/${WA}?text=${encodeURIComponent(msg)}`, '_blank');
-        }, 700);
-      }, 500);
     }
   </script>
 </body>
