@@ -711,7 +711,7 @@
       transition:background .15s;
     }
     .reply-btn:hover { background:var(--hairline-soft); }
-    .chat-input-area { display:flex; padding:var(--sp-sm); background:var(--canvas); border-top:1px solid var(--hairline); gap:var(--sp-xs); }
+    .chat-input-area { display:none; padding:var(--sp-sm); background:var(--canvas); border-top:1px solid var(--hairline); gap:var(--sp-xs); }
     .chat-input-area input {
       min-width:0;
       flex:1;
@@ -732,6 +732,15 @@
       font-weight:600;
       cursor:pointer;
     }
+
+    .typing-indicator { display:flex; align-items:center; gap:4px; padding:12px 16px !important; }
+    .typing-indicator span {
+      width:7px; height:7px; border-radius:50%; background:var(--hairline);
+      animation:typingDot 1.2s ease-in-out infinite;
+    }
+    .typing-indicator span:nth-child(2) { animation-delay:.2s; }
+    .typing-indicator span:nth-child(3) { animation-delay:.4s; }
+    @keyframes typingDot { 0%,60%,100% { transform:translateY(0); opacity:.4; } 30% { transform:translateY(-4px); opacity:1; } }
 
     .reveal { opacity:0; transform:translateY(20px); transition:opacity .5s ease, transform .5s ease; }
     .reveal.vis { opacity:1; transform:translateY(0); }
@@ -1134,13 +1143,13 @@
       </div>
       <div class="chat-replies" id="chat-replies">
         <button class="reply-btn" onclick="handleReply('What do you sell?')">What do you sell?</button>
-        <button class="reply-btn" onclick="handleReply('What are your timings?')">What are your timings?</button>
-        <button class="reply-btn" onclick="handleReply('Do you provide delivery?')">Do you provide delivery?</button>
-        <button class="reply-btn" onclick="handleReply('Talk to owner')">Talk to owner</button>
+        <button class="reply-btn" onclick="handleReply('Store timings')">Store timings</button>
+        <button class="reply-btn" onclick="handleReply('Delivery?')">Delivery?</button>
+        <button class="reply-btn" onclick="handleReply('Contact us')">Contact us</button>
       </div>
-      <div class="chat-input-area">
+      <div class="chat-input-area" id="chat-input-area">
         <input type="text" id="chat-input" placeholder="Type a message..." onkeydown="handleChatPress(event)" />
-        <button onclick="sendChatMessage()">Send</button>
+        <button id="chat-send-btn" onclick="sendChatMessage()">Send</button>
       </div>
     </div>
     <button class="chat-toggle" onclick="toggleChat()" aria-label="Open chat">
@@ -1149,161 +1158,237 @@
   </div>
 
   <script>
-    const HAPTIC_SELECTOR = [
-      'a',
-      'button',
-      '.cat-hdr',
-      '.g-card',
-      '.tab-btn',
-      '.soc-btn',
-      '.footer-soc',
-      '.bar-btn',
-      '.chat-toggle',
-      '.reply-btn'
-    ].join(',');
+    // ── HAPTICS ──
+    const HAPTIC_SELECTOR = ['a','button','.cat-hdr','.g-card','.tab-btn','.soc-btn','.footer-soc','.bar-btn','.chat-toggle','.reply-btn'].join(',');
+    function pulseHaptic(type='tap'){const p={tap:10,soft:7,success:[8,24,12],open:[6,18,8]};if(window.AndroidHaptics?.performHapticFeedback){window.AndroidHaptics.performHapticFeedback(type);return;}if(window.webkit?.messageHandlers?.haptics){window.webkit.messageHandlers.haptics.postMessage(type);return;}if(navigator.vibrate)navigator.vibrate(p[type]||p.tap);}
+    function getHapticType(el){if(el.matches('.btn-wa,.b-wa,[href*="wa.me"]'))return'success';if(el.matches('.chat-toggle,.g-card,.cat-hdr,.tab-btn'))return'open';return'tap';}
+    document.addEventListener('pointerdown',e=>{const t=e.target.closest(HAPTIC_SELECTOR);if(!t||t.closest('[disabled],[aria-disabled="true"]'))return;pulseHaptic(getHapticType(t));t.classList.add('haptic-press');setTimeout(()=>t.classList.remove('haptic-press'),140);},{passive:true});
+    document.querySelectorAll('.hero .btn').forEach(btn=>{btn.addEventListener('pointerdown',e=>{const r=btn.getBoundingClientRect();btn.style.setProperty('--tap-x',`${e.clientX-r.left}px`);btn.style.setProperty('--tap-y',`${e.clientY-r.top}px`);btn.classList.remove('btn-ripple');void btn.offsetWidth;btn.classList.add('btn-ripple');});btn.addEventListener('animationend',e=>{if(e.animationName==='heroRipple')btn.classList.remove('btn-ripple');});});
 
-    function pulseHaptic(type = 'tap') {
-      const patterns = {
-        tap: 10,
-        soft: 7,
-        success: [8, 24, 12],
-        open: [6, 18, 8]
+    // ── CATALOGUE & UI ──
+    function toggleCat(hdr){const open=hdr.classList.contains('open');hdr.classList.toggle('open',!open);hdr.nextElementSibling.classList.toggle('open',!open);}
+    function switchTab(id,btn){document.querySelectorAll('.tab-btn').forEach(b=>{b.classList.remove('active');b.setAttribute('aria-selected','false');});document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));btn.classList.add('active');btn.setAttribute('aria-selected','true');document.getElementById('tab-'+id).classList.add('active');}
+    const LB_ICONS={lb_handles:'<svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M7 8h10a2 2 0 010 4H7"/><path d="M7 8a2 2 0 000 4"/><line x1="7" y1="12" x2="7" y2="16"/><line x1="17" y1="12" x2="17" y2="16"/></svg>',lb_panels:'<svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="3" y1="15" x2="21" y2="15"/><line x1="9" y1="3" x2="9" y2="21"/><line x1="15" y1="3" x2="15" y2="21"/></svg>',lb_glass_p:'<svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="8" height="18" rx="1"/><rect x="13" y="3" width="8" height="18" rx="1"/></svg>',lb_plywood:'<svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="3" rx="0.5"/><rect x="2" y="9" width="20" height="3" rx="0.5"/><rect x="2" y="14" width="20" height="3" rx="0.5"/><rect x="2" y="19" width="20" height="2" rx="0.5"/></svg>',lb_laminates:'<svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M2 7l10-4 10 4-10 4z"/><path d="M2 13l10-4 10 4-10 4z"/><path d="M2 19l10-4 10 4"/></svg>',lb_des_glass:'<svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M3 15h18M9 3v18M15 3v18"/></svg>',lb_wardrobe:'<svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="2" width="18" height="20" rx="1"/><line x1="12" y1="2" x2="12" y2="22"/><circle cx="10" cy="12" r="1" fill="currentColor"/><circle cx="14" cy="12" r="1" fill="currentColor"/></svg>',lb_shower:'<svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="12" height="18" rx="1"/><line x1="15" y1="3" x2="15" y2="21"/><line x1="3" y1="21" x2="21" y2="21"/><line x1="21" y1="3" x2="21" y2="21"/><circle cx="9" cy="10" r="1" fill="currentColor"/></svg>'};
+    function openLb(name,icon,desc){document.getElementById('lb-icon').innerHTML=LB_ICONS[icon]||'';document.getElementById('lb-name').textContent=name;document.getElementById('lb-desc').textContent=desc;document.getElementById('lb').classList.add('open');document.body.style.overflow='hidden';}
+    function closeLb(e){if(e&&e.target!==document.getElementById('lb')&&!e.target.classList.contains('lb-close'))return;document.getElementById('lb').classList.remove('open');document.body.style.overflow='';}
+    document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeLb({target:document.getElementById('lb')});document.getElementById('chat-panel').classList.remove('open');}});
+    const obs=new IntersectionObserver(entries=>{entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add('vis');obs.unobserve(entry.target);}});},{threshold:0.08});
+    document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+
+    // ── KIRAN CHATBOT ──
+    const WA = '917408889888';
+
+    const KB = {
+      greeting: {
+        answer: "Namaste! Great to have you here. What can I help you with today?",
+        chips: ["What do you sell?", "Store timings", "Where are you?", "Contact us"]
+      },
+      products: {
+        answer: "We stock plywood, glass & mirrors, laminates, fancy hardware, doors, and decorative wall panels — all under one roof. Which category interests you?",
+        chips: ["Tell me about plywood", "Tell me about glass", "Tell me about hardware", "Tell me about laminates"]
+      },
+      plywood: {
+        answer: "We carry Commercial Plywood, Hardwood Plywood, Block Boards, HDMR, MDF, WPC and PVC Boards — all ISI-certified and from trusted brands.",
+        chips: ["Tell me about glass", "Tell me about hardware", "Price / cost?", "Contact us"]
+      },
+      glass: {
+        answer: "Our glass range includes Toughened Glass, Designer Glass, Decorative Glass, Shower Cubicles, Glass Partitions and Premium Mirrors.",
+        chips: ["Tell me about laminates", "Tell me about hardware", "Price / cost?", "Contact us"]
+      },
+      laminates: {
+        answer: "We offer High Gloss, Textured, Acrylic and Decorative Laminates, plus Mica Sheets and Veneers — hundreds of shades and finishes available.",
+        chips: ["Tell me about plywood", "Tell me about hardware", "Price / cost?", "Contact us"]
+      },
+      hardware: {
+        answer: "Our hardware range covers door & cabinet handles, mortise locks, tower bolts, kitchen & cutlery baskets, tandem systems, soft-close drawer channels, profile handles and more.",
+        chips: ["Tell me about doors", "Tell me about wall panels", "Price / cost?", "Contact us"]
+      },
+      doors: {
+        answer: "We stock Flush Doors, Ready-made Doors and Wooden Doors in various finishes to suit every budget and style.",
+        chips: ["Tell me about hardware", "Tell me about wall panels", "Price / cost?", "Contact us"]
+      },
+      wallpanels: {
+        answer: "For walls we have Louvers Panels, CNC Panels, Wall Cladding, Charcoal Panels, Decorative Panels and Mouldings — perfect for modern interiors.",
+        chips: ["Tell me about laminates", "Tell me about glass", "Price / cost?", "Contact us"]
+      },
+      timings: {
+        answer: "Our showroom is open Monday to Saturday, 10:30 AM – 8:30 PM. We are closed on Sundays.",
+        chips: ["Where are you?", "Contact us", "Delivery?"]
+      },
+      location: {
+        answer: "We're at Manduadih Road, Sarkaripura Rd, Manduwadih, Varanasi — just ahead of the Police Station. Look for the RK signage!",
+        chips: ["Get directions", "Store timings", "Contact us"]
+      },
+      directions: {
+        answer: "Tap the button below to open our location in Google Maps. We're easy to find near Manduadih Police Station, Varanasi.",
+        chips: ["Store timings", "Contact us"],
+        action: () => window.open('https://maps.google.com/?q=New+RK+Glass+Plywood+Centre+Manduadih+Varanasi','_blank')
+      },
+      delivery: {
+        answer: "Yes, we deliver large orders across Varanasi and nearby areas. Delivery charges depend on the volume and distance. Call us for a quote.",
+        chips: ["Price / cost?", "Contact us", "Bulk / contractor orders?"]
+      },
+      price: {
+        answer: "Pricing depends on the brand, grade and quantity. For an accurate quote please call or WhatsApp us — we'll get back to you quickly!",
+        chips: ["Contact us", "Delivery?", "Bulk / contractor orders?"]
+      },
+      brands: {
+        answer: "We stock products only from reputed, ISI-certified brands. All our materials are quality-tested — no local or substandard goods.",
+        chips: ["Tell me about plywood", "Price / cost?", "Contact us"]
+      },
+      bulk: {
+        answer: "We regularly supply contractors, architects and interior designers. For bulk or project orders, call Mr. Ankit Motwani directly for the best pricing.",
+        chips: ["Contact us", "Price / cost?", "Delivery?"]
+      },
+      warranty: {
+        answer: "Our products come with manufacturer warranties where applicable. ISI-certified goods meet Bureau of Indian Standards quality norms.",
+        chips: ["Tell me about plywood", "Contact us"]
+      },
+      contact: {
+        answer: "Call or WhatsApp Mr. Ankit Motwani at +91 74088 89888. You can also find us on Instagram @newrkglassandplywoodcentre.",
+        chips: ["Store timings", "Where are you?", "Delivery?"]
+      },
+      thanks: {
+        answer: "You're welcome! Feel free to ask if you have more questions. We're happy to help. 😊",
+        chips: ["What do you sell?", "Contact us"]
+      },
+      instagram: {
+        answer: "Find us on Instagram at @newrkglassandplywoodcentre for product photos, new arrivals and interior inspiration!",
+        chips: ["Contact us", "What do you sell?"]
+      }
+    };
+
+    const RULES = [
+      [['hi','hello','hey','namaste','hlo','hii','good morning','good afternoon','good evening','sup','howdy'], 'greeting'],
+      [['plywood','ply','hardwood','block board','mdf','wpc','pvc','hdmr','board','timber'], 'plywood'],
+      [['glass','mirror','toughened','shower','partition','frosted','decorative glass'], 'glass'],
+      [['laminate','mica','veneer','acrylic','gloss','texture','surface','sheet'], 'laminates'],
+      [['hardware','handle','lock','hinge','bolt','basket','drawer','tandem','soft close','soft-close','aldrop','stopper'], 'hardware'],
+      [['door','flush','wooden','readymade','ready made'], 'doors'],
+      [['wall panel','louver','cladding','cnc panel','charcoal panel','moulding','panel'], 'wallpanels'],
+      [['sell','product','catalogue','catalog','range','item','stock','carry','available','do you have'], 'products'],
+      [['time','timing','open','close','hour','when','sunday','saturday','monday','holiday'], 'timings'],
+      [['where','location','address','find you','find us','place','map','near','manduadih','varanasi','how to reach','kahan'], 'location'],
+      [['direction','navigate','google map'], 'directions'],
+      [['deliver','delivery','shipping','ship','send','courier'], 'delivery'],
+      [['price','cost','rate','kitna','how much','charge','budget','expensive','cheap','affordable','quote'], 'price'],
+      [['brand','company','manufacturer','isi','certified','quality','original','genuine'], 'brands'],
+      [['bulk','contractor','wholesale','project','architect','designer','quantity'], 'bulk'],
+      [['warranty','guarantee'], 'warranty'],
+      [['contact','call','phone','number','whatsapp','reach','owner','ankit','motwani','talk'], 'contact'],
+      [['thank','thanks','shukriya','dhanyavad','ok great','awesome','perfect'], 'thanks'],
+      [['instagram','insta','social','facebook'], 'instagram'],
+    ];
+
+    function matchIntent(msg) {
+      const lc = msg.toLowerCase();
+      for (const [keywords, key] of RULES) {
+        if (keywords.some(kw => lc.includes(kw))) return key;
+      }
+      return null;
+    }
+
+    function addMessage(text, type) {
+      const body = document.getElementById('chat-body');
+      const el = document.createElement('div');
+      el.className = 'chat-msg ' + type;
+      el.innerHTML = text;
+      body.appendChild(el);
+      body.scrollTop = body.scrollHeight;
+    }
+
+    function showTyping() {
+      const body = document.getElementById('chat-body');
+      const el = document.createElement('div');
+      el.className = 'chat-msg bot typing-indicator';
+      el.id = 'typing-bubble';
+      el.innerHTML = '<span></span><span></span><span></span>';
+      body.appendChild(el);
+      body.scrollTop = body.scrollHeight;
+      return el;
+    }
+
+    function removeTyping() {
+      document.getElementById('typing-bubble')?.remove();
+    }
+
+    function setChips(list) {
+      const bar = document.getElementById('chat-replies');
+      bar.innerHTML = '';
+      list.forEach(label => {
+        const btn = document.createElement('button');
+        btn.className = 'reply-btn';
+        btn.textContent = label;
+        btn.onclick = () => handleReply(label);
+        bar.appendChild(btn);
+      });
+    }
+
+    function labelToKey(label) {
+      const map = {
+        "What do you sell?": "products",
+        "Store timings": "timings",
+        "Delivery?": "delivery",
+        "Where are you?": "location",
+        "Get directions": "directions",
+        "Contact us": "contact",
+        "Price / cost?": "price",
+        "Tell me about plywood": "plywood",
+        "Tell me about glass": "glass",
+        "Tell me about hardware": "hardware",
+        "Tell me about laminates": "laminates",
+        "Tell me about doors": "doors",
+        "Tell me about wall panels": "wallpanels",
+        "Bulk / contractor orders?": "bulk",
       };
+      return map[label] || matchIntent(label);
+    }
 
-      if (window.AndroidHaptics && typeof window.AndroidHaptics.performHapticFeedback === 'function') {
-        window.AndroidHaptics.performHapticFeedback(type);
-        return;
-      }
-
-      if (window.webkit && window.webkit.messageHandlers && window.webkit.messageHandlers.haptics) {
-        window.webkit.messageHandlers.haptics.postMessage(type);
-        return;
-      }
-
-      if (navigator.vibrate) {
-        navigator.vibrate(patterns[type] || patterns.tap);
+    function revealInput(waMode) {
+      const area = document.getElementById('chat-input-area');
+      area.style.display = 'flex';
+      const btn = document.getElementById('chat-send-btn');
+      if (waMode) {
+        btn.textContent = '→ WhatsApp';
+        btn.style.background = 'var(--green)';
       }
     }
 
-    function getHapticType(el) {
-      if (el.matches('.btn-wa, .b-wa, [href*="wa.me"]')) return 'success';
-      if (el.matches('.chat-toggle, .g-card, .cat-hdr, .tab-btn')) return 'open';
-      return 'tap';
-    }
-
-    document.addEventListener('pointerdown', e => {
-      const target = e.target.closest(HAPTIC_SELECTOR);
-      if (!target || target.closest('[disabled], [aria-disabled="true"]')) return;
-      pulseHaptic(getHapticType(target));
-      target.classList.add('haptic-press');
-      window.setTimeout(() => target.classList.remove('haptic-press'), 140);
-    }, { passive: true });
-
-    document.querySelectorAll('.hero .btn').forEach(btn => {
-      btn.addEventListener('pointerdown', e => {
-        const rect = btn.getBoundingClientRect();
-        btn.style.setProperty('--tap-x', `${e.clientX - rect.left}px`);
-        btn.style.setProperty('--tap-y', `${e.clientY - rect.top}px`);
-        btn.classList.remove('btn-ripple');
-        void btn.offsetWidth;
-        btn.classList.add('btn-ripple');
-      });
-
-      btn.addEventListener('animationend', e => {
-        if (e.animationName === 'heroRipple') btn.classList.remove('btn-ripple');
-      });
-    });
-
-    function toggleCat(hdr) {
-      const body = hdr.nextElementSibling;
-      const open = hdr.classList.contains('open');
-      hdr.classList.toggle('open', !open);
-      body.classList.toggle('open', !open);
-    }
-
-    function switchTab(id, btn) {
-      document.querySelectorAll('.tab-btn').forEach(b => {
-        b.classList.remove('active');
-        b.setAttribute('aria-selected', 'false');
-      });
-      document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
-      btn.classList.add('active');
-      btn.setAttribute('aria-selected', 'true');
-      document.getElementById('tab-' + id).classList.add('active');
-    }
-
-    const LB_ICONS = {
-      lb_handles: '<svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M7 8h10a2 2 0 010 4H7"/><path d="M7 8a2 2 0 000 4"/><line x1="7" y1="12" x2="7" y2="16"/><line x1="17" y1="12" x2="17" y2="16"/></svg>',
-      lb_panels: '<svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="3" y1="15" x2="21" y2="15"/><line x1="9" y1="3" x2="9" y2="21"/><line x1="15" y1="3" x2="15" y2="21"/></svg>',
-      lb_glass_p: '<svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="8" height="18" rx="1"/><rect x="13" y="3" width="8" height="18" rx="1"/></svg>',
-      lb_plywood: '<svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="3" rx="0.5"/><rect x="2" y="9" width="20" height="3" rx="0.5"/><rect x="2" y="14" width="20" height="3" rx="0.5"/><rect x="2" y="19" width="20" height="2" rx="0.5"/></svg>',
-      lb_laminates: '<svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M2 7l10-4 10 4-10 4z"/><path d="M2 13l10-4 10 4-10 4z"/><path d="M2 19l10-4 10 4"/></svg>',
-      lb_des_glass: '<svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M3 15h18M9 3v18M15 3v18"/></svg>',
-      lb_wardrobe: '<svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="2" width="18" height="20" rx="1"/><line x1="12" y1="2" x2="12" y2="22"/><circle cx="10" cy="12" r="1" fill="currentColor"/><circle cx="14" cy="12" r="1" fill="currentColor"/></svg>',
-      lb_shower: '<svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="12" height="18" rx="1"/><line x1="15" y1="3" x2="15" y2="21"/><line x1="3" y1="21" x2="21" y2="21"/><line x1="21" y1="3" x2="21" y2="21"/><circle cx="9" cy="10" r="1" fill="currentColor"/></svg>'
-    };
-
-    function openLb(name, icon, desc) {
-      document.getElementById('lb-icon').innerHTML = LB_ICONS[icon] || '';
-      document.getElementById('lb-name').textContent = name;
-      document.getElementById('lb-desc').textContent = desc;
-      document.getElementById('lb').classList.add('open');
-      document.body.style.overflow = 'hidden';
-    }
-
-    function closeLb(e) {
-      if (e && e.target !== document.getElementById('lb') && !e.target.classList.contains('lb-close')) return;
-      document.getElementById('lb').classList.remove('open');
-      document.body.style.overflow = '';
-    }
-
-    document.addEventListener('keydown', e => {
-      if (e.key === 'Escape') {
-        closeLb({ target: document.getElementById('lb') });
-        document.getElementById('chat-panel').classList.remove('open');
-      }
-    });
-
-    const obs = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('vis');
-          obs.unobserve(entry.target);
+    function respond(key, delay = 520) {
+      const entry = KB[key];
+      if (!entry) return false;
+      showTyping();
+      setTimeout(() => {
+        removeTyping();
+        addMessage(entry.answer, 'bot');
+        if (entry.action) setTimeout(entry.action, 300);
+        if (entry.chips?.length) {
+          setChips(entry.chips);
+        } else {
+          setChips(["What do you sell?", "Contact us"]);
         }
-      });
-    }, { threshold: 0.08 });
-    document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
-
-    const BOT_DATA = {
-      "What do you sell?": "We specialize in premium plywood, designer glass, modular hardware, luxury laminates and decorative wall panels. You can also check the catalogue section on this page.",
-      "What are your timings?": "Our showroom in Varanasi is open Monday to Saturday, from 10:30 AM to 8:30 PM.",
-      "Do you provide delivery?": "Yes. We offer delivery for large orders across Varanasi and nearby areas. Charges depend on volume and distance.",
-      "Talk to owner": "You can reach Mr. Ankit Motwani directly at +91 74088 89888, or use the WhatsApp button at the bottom of the screen.",
-      "default": "I am not sure about that, but you can call us at +91 74088 89888 for expert guidance."
-    };
+      }, delay);
+      return true;
+    }
 
     function toggleChat() {
       const panel = document.getElementById('chat-panel');
       panel.classList.toggle('open');
-      if (panel.classList.contains('open')) document.getElementById('chat-input').focus();
     }
 
-    function handleChatPress(e) {
-      if (e.key === 'Enter') sendChatMessage();
-    }
+    function handleChatPress(e) { if (e.key === 'Enter') sendChatMessage(); }
 
-    function addMessage(text, type) {
-      const chatBody = document.getElementById('chat-body');
-      const bubble = document.createElement('div');
-      bubble.className = 'chat-msg ' + type;
-      bubble.textContent = text;
-      chatBody.appendChild(bubble);
-      chatBody.scrollTop = chatBody.scrollHeight;
-    }
-
-    function handleReply(question) {
-      addMessage(question, 'user');
-      setTimeout(() => addMessage(BOT_DATA[question] || BOT_DATA.default, 'bot'), 450);
+    function handleReply(label) {
+      const key = labelToKey(label);
+      addMessage(label, 'user');
+      if (key && respond(key)) return;
+      showTyping();
+      setTimeout(() => {
+        removeTyping();
+        addMessage("I'm not sure about that one. Type your question below and I'll connect you directly to our team on WhatsApp!", 'bot');
+        setChips([]);
+        revealInput(true);
+      }, 500);
     }
 
     function sendChatMessage() {
@@ -1312,20 +1397,19 @@
       if (!msg) return;
       addMessage(msg, 'user');
       input.value = '';
+      const key = matchIntent(msg);
+      if (key) {
+        respond(key);
+        return;
+      }
+      showTyping();
       setTimeout(() => {
-        const lowerMsg = msg.toLowerCase();
-        let botResponse = BOT_DATA.default;
-        if (lowerMsg.includes('sell') || lowerMsg.includes('product') || lowerMsg.includes('catalog')) {
-          botResponse = BOT_DATA["What do you sell?"];
-        } else if (lowerMsg.includes('time') || lowerMsg.includes('open') || lowerMsg.includes('close') || lowerMsg.includes('timing')) {
-          botResponse = BOT_DATA["What are your timings?"];
-        } else if (lowerMsg.includes('deliver') || lowerMsg.includes('shipping')) {
-          botResponse = BOT_DATA["Do you provide delivery?"];
-        } else if (lowerMsg.includes('owner') || lowerMsg.includes('ankit') || lowerMsg.includes('talk')) {
-          botResponse = BOT_DATA["Talk to owner"];
-        }
-        addMessage(botResponse, 'bot');
-      }, 550);
+        removeTyping();
+        addMessage("I couldn't find an answer for that — connecting you to our team on WhatsApp now! 🚀", 'bot');
+        setTimeout(() => {
+          window.open(`https://wa.me/${WA}?text=${encodeURIComponent(msg)}`, '_blank');
+        }, 700);
+      }, 500);
     }
   </script>
 </body>
