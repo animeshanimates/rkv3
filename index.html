@@ -705,6 +705,8 @@
       flex:1;overflow-y:auto;padding:14px 14px 8px;
       display:flex;flex-direction:column;gap:8px;background:#fff;position:relative;
     }
+    /* ── FIX: spacer pushes messages to bottom when few messages ── */
+    #judy-body::before{content:'';flex:1;min-height:0;}
     #judy-body::-webkit-scrollbar{width:3px}
     #judy-body::-webkit-scrollbar-thumb{background:#e5e5e5;border-radius:4px}
     .jmsg{
@@ -766,12 +768,33 @@
       font-size:10.5px;color:#aaa;text-align:center;letter-spacing:0.1px;
       padding:3px 12px 9px;background:#fff;font-family:var(--font);
     }
+
+    /* ══════════════════════════════════════════════
+       MOBILE FIX: full-width bottom-sheet panel
+       ══════════════════════════════════════════════ */
     @media(max-width:480px){
+      /* Panel: flush above bottom bar, full width, proper dvh height */
       #judy-panel{
-        width:calc(100vw - 16px);right:8px;
-        bottom:calc(var(--bar-h) + var(--safe-bottom) + 72px);
-        height:calc(100vh - var(--bar-h) - var(--safe-bottom) - 90px);
-        border-radius:16px;
+        width:100%;
+        left:0;
+        right:0;
+        bottom:calc(var(--bar-h) + var(--safe-bottom));
+        height:min(570px, calc(100dvh - var(--bar-h) - var(--safe-bottom) - 76px));
+        border-radius:16px 16px 0 0;
+        box-shadow:0 -4px 32px rgba(0,0,0,.20);
+        /* Reset desktop transform origin */
+        transform-origin:bottom center;
+      }
+      /* Launcher stays small, sits just above bottom bar */
+      #judy-launcher{
+        right:var(--sp-md);
+        bottom:calc(var(--bar-h) + var(--safe-bottom) + 12px);
+      }
+      /* Hide launcher when panel is open on mobile to avoid clutter */
+      #judy-panel.open ~ #judy-launcher,
+      body:has(#judy-panel.open) #judy-launcher{
+        opacity:0;
+        pointer-events:none;
       }
     }
   </style>
@@ -933,7 +956,6 @@
           </div>
           <div class="cat-body open"><div class="tags"><span class="tag">Commercial Plywood</span><span class="tag">Hardwood Plywood</span><span class="tag">Block Boards</span><span class="tag">HDMR Boards</span><span class="tag">MDF Boards</span><span class="tag">WPC Boards</span><span class="tag">PVC Boards</span></div></div>
         </div>
-
         <div class="cat-item">
           <div class="cat-hdr" onclick="toggleCat(this)">
             <div class="cat-ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="8" height="8" rx="1"/><rect x="13" y="3" width="8" height="8" rx="1"/><rect x="3" y="13" width="8" height="8" rx="1"/><rect x="13" y="13" width="8" height="8" rx="1"/></svg></div>
@@ -942,7 +964,6 @@
           </div>
           <div class="cat-body"><div class="tags"><span class="tag">Toughened Glass</span><span class="tag">Designer Glass</span><span class="tag">Decorative Glass</span><span class="tag">Shower Cubicles</span><span class="tag">Glass Partitions</span><span class="tag">Premium Mirrors</span></div></div>
         </div>
-
         <div class="cat-item">
           <div class="cat-hdr" onclick="toggleCat(this)">
             <div class="cat-ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6l10-4 10 4-10 4z"/><path d="M2 12l10-4 10 4-10 4z"/><path d="M2 18l10-4 10 4"/></svg></div>
@@ -951,7 +972,6 @@
           </div>
           <div class="cat-body"><div class="tags"><span class="tag">High Gloss Laminates</span><span class="tag">Textured Laminates</span><span class="tag">Acrylic Laminates</span><span class="tag">Decorative Laminates</span><span class="tag">Mica Sheets</span><span class="tag">Veneers</span></div></div>
         </div>
-
         <div class="cat-item">
           <div class="cat-hdr" onclick="toggleCat(this)">
             <div class="cat-ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M4.22 4.22l2.12 2.12M17.66 17.66l2.12 2.12M2 12h3M19 12h3M4.22 19.78l2.12-2.12M17.66 6.34l2.12-2.12"/></svg></div>
@@ -960,7 +980,6 @@
           </div>
           <div class="cat-body"><div class="tags"><span class="tag">Designer Door Handles</span><span class="tag">Cabinet Handles</span><span class="tag">Wardrobe Handles</span><span class="tag">Mortise Locks</span><span class="tag">Tower Bolts</span><span class="tag">Kitchen Baskets</span><span class="tag">Cutlery Baskets</span><span class="tag">Tandem Systems</span><span class="tag">Drawer Channels</span><span class="tag">Soft-close Systems</span><span class="tag">Profile Handles</span><span class="tag">Aldrops</span><span class="tag">Door Stoppers</span></div></div>
         </div>
-
         <div class="cat-item">
           <div class="cat-hdr" onclick="toggleCat(this)">
             <div class="cat-ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 21V3h16v18"/><path d="M2 21h20"/><circle cx="15.5" cy="12" r="0.8" fill="currentColor"/></svg></div>
@@ -969,7 +988,6 @@
           </div>
           <div class="cat-body"><div class="tags"><span class="tag">Flush Doors</span><span class="tag">Ready-made Doors</span><span class="tag">Wooden Doors</span></div></div>
         </div>
-
         <div class="cat-item">
           <div class="cat-hdr" onclick="toggleCat(this)">
             <div class="cat-ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="9" height="6" rx="0.5"/><rect x="13" y="2" width="9" height="6" rx="0.5"/><rect x="2" y="10" width="5" height="6" rx="0.5"/><rect x="9" y="10" width="6" height="6" rx="0.5"/><rect x="17" y="10" width="5" height="6" rx="0.5"/><rect x="2" y="18" width="9" height="4" rx="0.5"/><rect x="13" y="18" width="9" height="4" rx="0.5"/></svg></div>
@@ -989,7 +1007,6 @@
         <h2 class="disp-lg sec-title">Product Gallery</h2>
         <p class="body sec-desc">Tap any tile for details.</p>
       </div>
-
       <div class="gallery">
         <button class="g-card" onclick="openLb('Door Handles','lb_handles','Designer and profile handles for every cabinet, wardrobe and kitchen door.')"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M7 8h10a2 2 0 010 4H7"/><path d="M7 8a2 2 0 000 4"/><line x1="7" y1="12" x2="7" y2="16"/><line x1="17" y1="12" x2="17" y2="16"/></svg><span class="g-lbl">Door Handles</span><span class="g-overlay"><span class="g-overlay-txt">View</span></span></button>
         <button class="g-card" onclick="openLb('Decorative Panels','lb_panels','CNC panels, louvers, charcoal panels and wall cladding for stunning interiors.')"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="3" y1="15" x2="21" y2="15"/><line x1="9" y1="3" x2="9" y2="21"/><line x1="15" y1="3" x2="15" y2="21"/></svg><span class="g-lbl">Decorative Panels</span><span class="g-overlay"><span class="g-overlay-txt">View</span></span></button>
@@ -997,7 +1014,7 @@
         <button class="g-card" onclick="openLb('Premium Plywood','lb_plywood','Commercial, hardwood and WPC boards for all construction needs.')"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="3" rx="0.5"/><rect x="2" y="9" width="20" height="3" rx="0.5"/><rect x="2" y="14" width="20" height="3" rx="0.5"/><rect x="2" y="19" width="20" height="2" rx="0.5"/></svg><span class="g-lbl">Premium Plywood</span><span class="g-overlay"><span class="g-overlay-txt">View</span></span></button>
         <button class="g-card" onclick="openLb('Laminates','lb_laminates','High-gloss, textured and acrylic laminates in hundreds of shades.')"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M2 7l10-4 10 4-10 4z"/><path d="M2 13l10-4 10 4-10 4z"/><path d="M2 19l10-4 10 4"/></svg><span class="g-lbl">Laminates</span><span class="g-overlay"><span class="g-overlay-txt">View</span></span></button>
         <button class="g-card" onclick="openLb('Designer Glass','lb_des_glass','Frosted, tinted and patterned glass for modern aesthetic interiors.')"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M3 15h18M9 3v18M15 3v18"/></svg><span class="g-lbl">Designer Glass</span><span class="g-overlay"><span class="g-overlay-txt">View</span></span></button>
-        <button class="g-card" onclick="openLb('Wardrobes & Kitchens','lb_wardrobe','Complete hardware systems: tandem drawers, soft-close channels and baskets.')"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="2" width="18" height="20" rx="1"/><line x1="12" y1="2" x2="12" y2="22"/><circle cx="10" cy="12" r="1" fill="currentColor"/><circle cx="14" cy="12" r="1" fill="currentColor"/></svg><span class="g-lbl">Wardrobes &amp; Kitchens</span><span class="g-overlay"><span class="g-overlay-txt">View</span></span></button>
+        <button class="g-card" onclick="openLb('Wardrobes &amp; Kitchens','lb_wardrobe','Complete hardware systems: tandem drawers, soft-close channels and baskets.')"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="2" width="18" height="20" rx="1"/><line x1="12" y1="2" x2="12" y2="22"/><circle cx="10" cy="12" r="1" fill="currentColor"/><circle cx="14" cy="12" r="1" fill="currentColor"/></svg><span class="g-lbl">Wardrobes &amp; Kitchens</span><span class="g-overlay"><span class="g-overlay-txt">View</span></span></button>
         <button class="g-card" onclick="openLb('Shower Cubicles','lb_shower','Elegant frameless and framed shower cubicle solutions.')"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="12" height="18" rx="1"/><line x1="15" y1="3" x2="15" y2="21"/><line x1="3" y1="21" x2="21" y2="21"/><line x1="21" y1="3" x2="21" y2="21"/><circle cx="9" cy="10" r="1" fill="currentColor"/></svg><span class="g-lbl">Shower Cubicles</span><span class="g-overlay"><span class="g-overlay-txt">View</span></span></button>
       </div>
     </div>
@@ -1131,12 +1148,13 @@
     </div>
   </div>
 
-  <!-- JUDY CHATBOT -->
+  <!-- JUDY CHATBOT LAUNCHER -->
   <button id="judy-launcher" onclick="toggleJudy()" aria-label="Open chat with Judy">
     <svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/></svg>
     <div class="notif"></div>
   </button>
 
+  <!-- JUDY CHATBOT PANEL -->
   <div id="judy-panel">
     <div id="judy-festive-banner"></div>
     <div id="judy-header">
@@ -1224,7 +1242,6 @@
     const JUDY_WA = '917408889888';
     let judyLang = 'en';
 
-    // Sound
     let judyAudioCtx = null;
     function judyPlayPop() {
       try {
@@ -1241,7 +1258,6 @@
       } catch(e) {}
     }
 
-    // Festival detection
     const JUDY_FESTIVALS = [
       { name:'🪔 Diwali', dates:[[9,20],[9,21],[9,22],[9,23],[9,24]] },
       { name:'🎨 Holi',   dates:[[1,24],[1,25],[1,26]] },
@@ -1539,6 +1555,7 @@
     let judyOpened = false;
     function toggleJudy() {
       const panel=document.getElementById('judy-panel');
+      const launcher=document.getElementById('judy-launcher');
       panel.classList.toggle('open');
       if(panel.classList.contains('open') && !judyOpened){
         judyOpened = true;
