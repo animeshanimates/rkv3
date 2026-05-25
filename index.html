@@ -429,6 +429,36 @@
     .g-card:nth-child(7) { background:#e4ffe4; }
     .g-card:nth-child(8) { background:var(--mint); }
 
+    /* ── Image-backed bento cards ── */
+    .g-bg {
+      position:absolute;
+      inset:0;
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      object-position:center;
+      border-radius:inherit;
+      z-index:0;
+      transition:transform .3s ease;
+    }
+    .g-card:active .g-bg { transform:scale(1.04); }
+    .g-img-grad {
+      position:absolute;
+      inset:0;
+      background:linear-gradient(to bottom, rgba(0,0,0,.06) 0%, rgba(0,0,0,.55) 100%);
+      border-radius:inherit;
+      z-index:1;
+    }
+    .g-card:has(.g-bg) .g-lbl {
+      position:relative;
+      z-index:2;
+      color:#fff;
+      opacity:1;
+      text-shadow:0 1px 4px rgba(0,0,0,.5);
+    }
+    .g-card:has(.g-bg) > svg { display:none; }
+    .g-overlay { z-index:3; }
+
     .map-wrap {
       height:220px;
       border-radius:var(--r-lg);
@@ -1015,14 +1045,54 @@
         <p class="body sec-desc">Tap any tile for details.</p>
       </div>
       <div class="gallery">
-        <button class="g-card" onclick="openLb('Door Handles','lb_handles','Designer and profile handles for every cabinet, wardrobe and kitchen door.')"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M7 8h10a2 2 0 010 4H7"/><path d="M7 8a2 2 0 000 4"/><line x1="7" y1="12" x2="7" y2="16"/><line x1="17" y1="12" x2="17" y2="16"/></svg><span class="g-lbl">Door Handles</span><span class="g-overlay"><span class="g-overlay-txt">View</span></span></button>
-        <button class="g-card" onclick="openLb('Decorative Panels','lb_panels','CNC panels, louvers, charcoal panels and wall cladding for stunning interiors.')"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="3" y1="15" x2="21" y2="15"/><line x1="9" y1="3" x2="9" y2="21"/><line x1="15" y1="3" x2="15" y2="21"/></svg><span class="g-lbl">Decorative Panels</span><span class="g-overlay"><span class="g-overlay-txt">View</span></span></button>
-        <button class="g-card" onclick="openLb('Glass Partitions','lb_glass_p','Toughened and designer glass partitions for offices, homes and showrooms.')"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="8" height="18" rx="1"/><rect x="13" y="3" width="8" height="18" rx="1"/></svg><span class="g-lbl">Glass Partitions</span><span class="g-overlay"><span class="g-overlay-txt">View</span></span></button>
-        <button class="g-card" onclick="openLb('Premium Plywood','lb_plywood','Commercial, hardwood and WPC boards for all construction needs.')"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="3" rx="0.5"/><rect x="2" y="9" width="20" height="3" rx="0.5"/><rect x="2" y="14" width="20" height="3" rx="0.5"/><rect x="2" y="19" width="20" height="2" rx="0.5"/></svg><span class="g-lbl">Premium Plywood</span><span class="g-overlay"><span class="g-overlay-txt">View</span></span></button>
-        <button class="g-card" onclick="openLb('Laminates','lb_laminates','High-gloss, textured and acrylic laminates in hundreds of shades.')"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M2 7l10-4 10 4-10 4z"/><path d="M2 13l10-4 10 4-10 4z"/><path d="M2 19l10-4 10 4"/></svg><span class="g-lbl">Laminates</span><span class="g-overlay"><span class="g-overlay-txt">View</span></span></button>
-        <button class="g-card" onclick="openLb('Designer Glass','lb_des_glass','Frosted, tinted and patterned glass for modern aesthetic interiors.')"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M3 15h18M9 3v18M15 3v18"/></svg><span class="g-lbl">Designer Glass</span><span class="g-overlay"><span class="g-overlay-txt">View</span></span></button>
-        <button class="g-card" onclick="openLb('Wardrobes &amp; Kitchens','lb_wardrobe','Complete hardware systems: tandem drawers, soft-close channels and baskets.')"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="2" width="18" height="20" rx="1"/><line x1="12" y1="2" x2="12" y2="22"/><circle cx="10" cy="12" r="1" fill="currentColor"/><circle cx="14" cy="12" r="1" fill="currentColor"/></svg><span class="g-lbl">Wardrobes &amp; Kitchens</span><span class="g-overlay"><span class="g-overlay-txt">View</span></span></button>
-        <button class="g-card" onclick="openLb('Shower Cubicles','lb_shower','Elegant frameless and framed shower cubicle solutions.')"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="12" height="18" rx="1"/><line x1="15" y1="3" x2="15" y2="21"/><line x1="3" y1="21" x2="21" y2="21"/><line x1="21" y1="3" x2="21" y2="21"/><circle cx="9" cy="10" r="1" fill="currentColor"/></svg><span class="g-lbl">Shower Cubicles</span><span class="g-overlay"><span class="g-overlay-txt">View</span></span></button>
+        <button class="g-card" onclick="openLb('Door Handles','lb_handles','Designer and profile handles for every cabinet, wardrobe and kitchen door.')">
+          <img class="g-bg" src="assets/gallery_door_handles.jpeg" alt="Door Handles" loading="lazy">
+          <div class="g-img-grad"></div>
+          <span class="g-lbl">Door Handles</span>
+          <span class="g-overlay"><span class="g-overlay-txt">View</span></span>
+        </button>
+        <button class="g-card" onclick="openLb('Decorative Panels','lb_panels','CNC panels, louvers, charcoal panels and wall cladding for stunning interiors.')">
+          <img class="g-bg" src="assets/gallery_decorative_panels.jpeg" alt="Decorative Panels" loading="lazy">
+          <div class="g-img-grad"></div>
+          <span class="g-lbl">Decorative Panels</span>
+          <span class="g-overlay"><span class="g-overlay-txt">View</span></span>
+        </button>
+        <button class="g-card" onclick="openLb('Glass Partitions','lb_glass_p','Toughened and designer glass partitions for offices, homes and showrooms.')">
+          <img class="g-bg" src="assets/gallery_glass_partitions.jpeg" alt="Glass Partitions" loading="lazy">
+          <div class="g-img-grad"></div>
+          <span class="g-lbl">Glass Partitions</span>
+          <span class="g-overlay"><span class="g-overlay-txt">View</span></span>
+        </button>
+        <button class="g-card" onclick="openLb('Premium Plywood','lb_plywood','Commercial, hardwood and WPC boards for all construction needs.')">
+          <img class="g-bg" src="assets/gallery_plywood.jpeg" alt="Premium Plywood" loading="lazy">
+          <div class="g-img-grad"></div>
+          <span class="g-lbl">Premium Plywood</span>
+          <span class="g-overlay"><span class="g-overlay-txt">View</span></span>
+        </button>
+        <button class="g-card" onclick="openLb('Laminates','lb_laminates','High-gloss, textured and acrylic laminates in hundreds of shades.')">
+          <img class="g-bg" src="assets/gallery_laminates.jpeg" alt="Laminates" loading="lazy">
+          <div class="g-img-grad"></div>
+          <span class="g-lbl">Laminates</span>
+          <span class="g-overlay"><span class="g-overlay-txt">View</span></span>
+        </button>
+        <button class="g-card" onclick="openLb('Designer Glass','lb_des_glass','Frosted, tinted and patterned glass for modern aesthetic interiors.')">
+          <img class="g-bg" src="assets/gallery_designer_glass.jpeg" alt="Designer Glass" loading="lazy">
+          <div class="g-img-grad"></div>
+          <span class="g-lbl">Designer Glass</span>
+          <span class="g-overlay"><span class="g-overlay-txt">View</span></span>
+        </button>
+        <button class="g-card" onclick="openLb('Wardrobes &amp; Kitchens','lb_wardrobe','Complete hardware systems: tandem drawers, soft-close channels and baskets.')">
+          <img class="g-bg" src="assets/gallery_wardrobes_kitchens.jpeg" alt="Wardrobes &amp; Kitchens" loading="lazy">
+          <div class="g-img-grad"></div>
+          <span class="g-lbl">Wardrobes &amp; Kitchens</span>
+          <span class="g-overlay"><span class="g-overlay-txt">View</span></span>
+        </button>
+        <button class="g-card" onclick="openLb('Shower Cubicles','lb_shower','Elegant frameless and framed shower cubicle solutions.')">
+          <img class="g-bg" src="assets/gallery_shower_cubicles.jpeg" alt="Shower Cubicles" loading="lazy">
+          <div class="g-img-grad"></div>
+          <span class="g-lbl">Shower Cubicles</span>
+          <span class="g-overlay"><span class="g-overlay-txt">View</span></span>
+        </button>
       </div>
     </div>
   </div>
