@@ -23,7 +23,7 @@
       --ink:#0a0a0a;
       --ink-inv:#ffffff;
       --lime:#cce296;
-      --cream:#fff8ec;
+      --cream:#fefcf8;
       --mint:#b5f5e4;
       --navy:#1b1e3d;
       --green:#25D366;
@@ -131,7 +131,7 @@
       letter-spacing:-.5px;
       flex-shrink:0;
     }
-    .nav-name { max-width:140px; font-size:12px; font-weight:600; letter-spacing:-.2px; line-height:1.2; }
+    .nav-name { font-size:13px; font-weight:600; letter-spacing:-.2px; line-height:1.2; }
     .nav-call {
       display:flex;
       align-items:center;
@@ -155,7 +155,7 @@
       justify-content:center;
     }
 
-    .marquee { height:34px; background:var(--primary); display:flex; align-items:center; overflow:hidden; }
+    .marquee { height:34px; background:#1a1714; display:flex; align-items:center; overflow:hidden; }
     .marquee-track { display:flex; gap:40px; white-space:nowrap; animation:scroll 20s linear infinite; }
     .marquee-track span { font-family:var(--mono); font-size:10px; font-weight:500; letter-spacing:1px; text-transform:uppercase; color:rgba(255,255,255,.8); }
     @keyframes scroll { from { transform:translateX(0); } to { transform:translateX(-50%); } }
@@ -254,11 +254,11 @@
     .soc-btn:active { transform:scale(.92); }
     .soc-btn svg { width:18px; height:18px; }
 
-    .block { padding:var(--sp-xxl) 0; }
-    .block-cream { background:var(--cream); }
-    .block-mint { background:var(--mint); }
-    .block-lime { background:var(--lime); }
-    .block-navy { background:var(--navy); color:var(--ink-inv); }
+    .block { padding:var(--sp-xxl) 0; background:#f7f4ef; }
+    .block-cream { background:#fefcf8; }
+    .block-mint  { background:#ede9e2; }
+    .block-lime  { background:#e3dfd8; }
+    .block-navy  { background:#161412; color:var(--ink-inv); }
     .sec-header { margin-bottom:var(--sp-xl); }
     .sec-eye { opacity:.5; margin-bottom:var(--sp-sm); }
     .sec-title { margin-bottom:var(--sp-sm); }
@@ -420,14 +420,14 @@
     }
     .g-card:hover .g-overlay, .g-card:active .g-overlay { opacity:1; }
     .g-overlay-txt { color:#fff; font-size:12px; font-weight:500; }
-    .g-card:nth-child(1) { background:#fff8ec; }
-    .g-card:nth-child(2) { background:#ccf5e4; }
-    .g-card:nth-child(3) { background:#ffe4f0; }
-    .g-card:nth-child(4) { background:#e4f0ff; }
-    .g-card:nth-child(5) { background:#f5f0ff; }
-    .g-card:nth-child(6) { background:#fff0e4; }
-    .g-card:nth-child(7) { background:#e4ffe4; }
-    .g-card:nth-child(8) { background:var(--mint); }
+    .g-card:nth-child(1) { background:#ede9e2; }
+    .g-card:nth-child(2) { background:#eae6df; }
+    .g-card:nth-child(3) { background:#eceae4; }
+    .g-card:nth-child(4) { background:#e3dfd8; }
+    .g-card:nth-child(5) { background:#eeeae3; }
+    .g-card:nth-child(6) { background:#eae7e1; }
+    .g-card:nth-child(7) { background:#ede9e3; }
+    .g-card:nth-child(8) { background:#e6e2dc; }
 
     /* ── Image-backed bento cards ── */
     .g-bg {
@@ -487,15 +487,15 @@
       align-items:flex-start;
       gap:var(--sp-md);
       padding:var(--sp-md);
-      background:rgba(255,255,255,.4);
+      background:rgba(255,255,255,.08);
       border-radius:var(--r-lg);
     }
     .why-check {
       width:26px;
       height:26px;
       border-radius:var(--r-full);
-      background:var(--lime);
-      color:var(--primary);
+      background:#8c7355;
+      color:#fff;
       display:flex;
       align-items:center;
       justify-content:center;
@@ -505,7 +505,7 @@
     .why-title { font-size:14px; font-weight:600; letter-spacing:-.2px; margin-bottom:2px; }
     .why-desc { font-size:12px; opacity:.68; line-height:1.55; }
 
-    footer { background:var(--canvas); border-top:1px solid var(--hairline); padding:var(--sp-xxl) 0 var(--sp-xl); }
+    footer { background:#f7f4ef; border-top:1px solid #dedad4; padding:var(--sp-xxl) 0 var(--sp-xl); }
     .footer-in { display:flex; flex-direction:column; align-items:center; text-align:center; gap:var(--sp-xl); }
     .footer-brand-row { display:flex; align-items:center; gap:var(--sp-sm); }
     .footer-mark {
@@ -840,8 +840,7 @@
   <nav class="nav">
     <div class="wrap">
       <a href="#" class="nav-logo" aria-label="Go to top">
-        <div class="nav-mark">RK</div>
-        <div class="nav-name">New RK Glass &amp; Plywood</div>
+        <div class="nav-name">New RK Glass &amp; Plywood Centre</div>
       </a>
       <a href="tel:+917408889888" class="nav-call">
         <div class="nav-call-icon" aria-hidden="true">
@@ -1172,7 +1171,6 @@
     <div class="wrap">
       <div class="footer-in">
         <div class="footer-brand-row">
-          <div class="footer-mark">RK</div>
           <div class="footer-brand-name">New RK Glass &amp; Plywood Centre</div>
         </div>
         <p class="footer-addr">Manduadih Road, Sarkaripura Rd,<br>Manduwadih, Varanasi 221103</p>
