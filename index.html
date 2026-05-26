@@ -201,10 +201,10 @@
     .hero-logo:active { transform:translate3d(0, 1px, 0) scale(.985); }
     .hero-logo img { width:100%; height:100%; object-fit:cover; object-position:50% 50%; }
     .hero-text { text-align:center; }
-    .hero-eyebrow { opacity:.7; margin-bottom:var(--sp-sm); text-shadow:0 1px 6px rgba(255,255,255,.6); }
-    .hero-title { margin-bottom:var(--sp-sm); text-shadow:0 2px 12px rgba(255,255,255,.5); }
-    .hero-sub { opacity:.85; margin-bottom:var(--sp-md); text-shadow:0 1px 8px rgba(255,255,255,.5); }
-    .hero-desc { opacity:.9; margin-bottom:0; font-size:15px; line-height:1.6; text-shadow:0 1px 6px rgba(255,255,255,.5); }
+    .hero-eyebrow { opacity:.7; margin-bottom:var(--sp-sm); text-shadow:0 1px 3px rgba(255,255,255,.3); }
+    .hero-title { margin-bottom:var(--sp-sm); text-shadow:0 1px 4px rgba(255,255,255,.25); }
+    .hero-sub { opacity:.85; margin-bottom:var(--sp-md); text-shadow:0 1px 3px rgba(255,255,255,.2); }
+    .hero-desc { opacity:.9; margin-bottom:0; font-size:15px; line-height:1.6; text-shadow:0 1px 3px rgba(255,255,255,.2); }
     .hero .btn {
       position:relative;
       overflow:hidden;
@@ -906,7 +906,16 @@
   <section class="hero">
     <video class="hero-video" src="assets/hero_bg.mp4" autoplay muted loop playsinline preload="auto"></video>
     <div class="wrap">
+      <div class="hero-logo-wrap fu fu-1">
+        <div class="hero-logo-float">
+          <div class="hero-logo">
+            <img src="assets/rkkk.png" alt="New RK Glass and Plywood Centre logo" />
+          </div>
+        </div>
+      </div>
+
       <div class="hero-text">
+        <div class="eyebrow hero-eyebrow fu fu-2">Varanasi - Uttar Pradesh</div>
         <h1 class="disp-xl hero-title fu fu-2">New RK Glass &amp; Plywood Centre</h1>
         <p class="subhead hero-sub fu fu-3">Your one-stop for modern interior spaces.</p>
         <p class="hero-desc fu fu-4">Premium plywood, glass, laminates, decorative panels and modern interior solutions under one roof.</p>
