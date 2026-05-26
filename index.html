@@ -175,6 +175,7 @@
       object-position:center;
       z-index:0;
       pointer-events:none;
+      transition: opacity 1s ease;
     }
     .hero::before {
       content: "";
@@ -200,11 +201,11 @@
     .hero-logo:hover { box-shadow:0 16px 36px rgba(0,0,0,.2), 0 0 0 1px rgba(0,0,0,.1); transform:translate3d(0, -4px, 0) scale(1.015); }
     .hero-logo:active { transform:translate3d(0, 1px, 0) scale(.985); }
     .hero-logo img { width:100%; height:100%; object-fit:cover; object-position:50% 50%; }
-    .hero-text { text-align:center; }
-    .hero-eyebrow { opacity:.7; margin-bottom:var(--sp-sm); text-shadow:0 1px 3px rgba(255,255,255,.3); }
-    .hero-title { margin-bottom:var(--sp-sm); text-shadow:0 1px 4px rgba(255,255,255,.25); }
-    .hero-sub { opacity:.85; margin-bottom:var(--sp-md); text-shadow:0 1px 3px rgba(255,255,255,.2); }
-    .hero-desc { opacity:.9; margin-bottom:0; font-size:15px; line-height:1.6; text-shadow:0 1px 3px rgba(255,255,255,.2); }
+    .hero-text { text-align:center; color:#fff; }
+    .hero-eyebrow { opacity:.75; margin-bottom:var(--sp-sm); text-shadow:0 1px 3px rgba(0,0,0,.3); color:#fff; }
+    .hero-title { margin-bottom:var(--sp-sm); text-shadow:0 1px 4px rgba(0,0,0,.25); color:#fff; }
+    .hero-sub { opacity:.88; margin-bottom:var(--sp-md); text-shadow:0 1px 3px rgba(0,0,0,.2); color:#fff; }
+    .hero-desc { opacity:.85; margin-bottom:0; font-size:15px; line-height:1.6; text-shadow:0 1px 3px rgba(0,0,0,.2); color:#fff; }
     .hero .btn {
       position:relative;
       overflow:hidden;
@@ -1717,6 +1718,28 @@
       document.body.removeChild(a);
       URL.revokeObjectURL(url);
     }
+    // Hero video smooth loop — fade out near end, fade back in on restart
+    (function(){
+      const v = document.querySelector('.hero-video');
+      if (!v) return;
+      const FADE = 1.2; // seconds before end to start fading
+      v.addEventListener('timeupdate', function(){
+        if (!v.duration) return;
+        const remaining = v.duration - v.currentTime;
+        if (remaining <= FADE) {
+          v.style.opacity = Math.max(0, remaining / FADE);
+        }
+      });
+      v.addEventListener('seeking', function(){
+        if (v.currentTime < FADE) {
+          v.style.opacity = 0;
+          requestAnimationFrame(function fadeIn(){
+            v.style.transition = 'opacity 1s ease';
+            v.style.opacity = 1;
+          });
+        }
+      });
+    })();
   </script>
 </body>
 </html>
